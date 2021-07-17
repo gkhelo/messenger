@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Messenger</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="main">Main</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="chat">Chat</string>
+</resources>
