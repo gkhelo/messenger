@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ge.gkhelashvili.messenger.R
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), ISearchView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
