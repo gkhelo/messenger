@@ -6,4 +6,8 @@
     <string name="search">Search</string>
     <string name="profile">Profile</string>
     <string name="chat">Chat</string>
+
+    <string name="user_avatar">User Avatar</string>
+    <string name="username">Username</string>
+    <string name="profession">Profession</string>
 </resources>
