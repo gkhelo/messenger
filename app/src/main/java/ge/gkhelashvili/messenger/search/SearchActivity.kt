@@ -23,7 +23,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
 
     private fun init() {
         presenter = SearchPresenter(this)
-        usersAdapter = UsersAdapter()
+        usersAdapter = UsersAdapter(presenter)
 
         initUsers()
     }
