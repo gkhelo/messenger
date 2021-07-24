@@ -2,9 +2,11 @@ package ge.gkhelashvili.messenger.search
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import ge.gkhelashvili.messenger.R
+import ge.gkhelashvili.messenger.model.User
 
 class SearchActivity : AppCompatActivity(), ISearchView {
 
@@ -20,16 +22,26 @@ class SearchActivity : AppCompatActivity(), ISearchView {
     }
 
     private fun init() {
-        presenter = SearchPresenter()
+        presenter = SearchPresenter(this)
         usersAdapter = UsersAdapter()
 
         initUsers()
     }
 
     private fun initUsers() {
-        usersAdapter.users = presenter.getAllUsers()
-
         findViewById<RecyclerView>(R.id.users_info).adapter = usersAdapter
+        presenter.getAllUsers()
+    }
+
+    override fun showUsers(users: List<User>?) {
+        if (users == null) {
+            Toast.makeText(this, "Can't fetch users", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        Log.i(TAG, "Showing fetched users")
+        usersAdapter.users = users
+        usersAdapter.notifyDataSetChanged()
     }
 
     companion object {

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "526407035203",
+    "firebase_url": "https://messenger-9de03-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "messenger-9de03",
     "storage_bucket": "messenger-9de03.appspot.com"
   },

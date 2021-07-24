@@ -4,5 +4,7 @@ import ge.gkhelashvili.messenger.model.User
 
 interface ISearchPresenter {
 
-    fun getAllUsers(): List<User>
+    fun getAllUsers()
+
+    fun onUsersFetched(users: List<User>?)
 }
