@@ -42,6 +42,8 @@ class UsersAdapter(val presenter: ISearchPresenter) : RecyclerView.Adapter<Users
                     .with(view)
                     .load(presenter.getAvatarReference(user.avatar))
                     .into(avatar)
+            } else {
+                avatar.setImageResource(R.drawable.avatar_image_placeholder)
             }
         }
     }

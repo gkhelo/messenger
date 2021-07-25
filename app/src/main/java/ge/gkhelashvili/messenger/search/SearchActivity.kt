@@ -1,11 +1,17 @@
 package ge.gkhelashvili.messenger.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import ge.gkhelashvili.messenger.R
+import ge.gkhelashvili.messenger.main.MainActivity
 import ge.gkhelashvili.messenger.model.User
 
 class SearchActivity : AppCompatActivity(), ISearchView {
@@ -25,12 +31,39 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         presenter = SearchPresenter(this)
         usersAdapter = UsersAdapter(presenter)
 
+        initToolbar()
         initUsers()
+    }
+
+    private fun initToolbar() {
+        initBackButton()
+        initSearch()
     }
 
     private fun initUsers() {
         findViewById<RecyclerView>(R.id.users_info).adapter = usersAdapter
         presenter.getAllUsers()
+    }
+
+    private fun initBackButton() {
+        findViewById<MaterialToolbar>(R.id.search_toolbar).setNavigationOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+    }
+
+    private fun initSearch() {
+        val layout = findViewById<TextInputLayout>(R.id.search_layout)
+        val search = layout.findViewById<TextInputEditText>(R.id.search_edit_text)
+
+        // TODO: Use debounce
+        search.addTextChangedListener {
+            val name = it.toString()
+            if (name.isEmpty()) {
+                presenter.getAllUsers()
+            } else if (name.length > 3) {
+                presenter.getUsers(name)
+            }
+        }
     }
 
     override fun showUsers(users: List<User>?) {

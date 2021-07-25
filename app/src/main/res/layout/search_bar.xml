@@ -15,9 +15,11 @@
     app:boxStrokeWidth="0dp"
     app:boxStrokeWidthFocused="0dp"
 
+    app:endIconMode="clear_text"
     app:startIconDrawable="@drawable/ic_search">
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/search_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

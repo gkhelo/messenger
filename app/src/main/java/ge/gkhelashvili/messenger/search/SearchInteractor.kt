@@ -30,6 +30,27 @@ class SearchInteractor(private val presenter: ISearchPresenter) {
             }
     }
 
+    fun getUsers(name: String) {
+        users
+            .orderByChild("username")
+            .equalTo(name)
+            .get()
+            .addOnSuccessListener {
+                Log.i(TAG, "Successfully fetched ${it.childrenCount} users")
+
+                val users = mutableListOf<User>()
+                it.children.forEach { dataSnapshot ->
+                    users.add(dataSnapshot.getValue(User::class.java) as User)
+                }
+
+                presenter.onUsersFetched(users)
+            }
+            .addOnFailureListener {
+                Log.e(TAG, "Error occurred while trying to fetch users", it)
+                presenter.onUsersFetched(null)
+            }
+    }
+
     fun getAvatarReference(avatar: String): StorageReference {
         return avatars.child(avatar)
     }
