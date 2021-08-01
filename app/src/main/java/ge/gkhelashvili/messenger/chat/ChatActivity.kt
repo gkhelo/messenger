@@ -52,7 +52,8 @@ class ChatActivity : AppCompatActivity(), IChatView {
 
     private fun initMessages() {
         findViewById<RecyclerView>(R.id.messages).adapter = messagesAdapter
-        presenter.fetchMessages()
+        // TODO: change second parameter to real user id
+        presenter.fetchMessages(getCurrentUserId(), "6789")
     }
 
     private fun initBackButton() {
