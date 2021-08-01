@@ -1,7 +1,9 @@
 package ge.gkhelashvili.messenger.chat
 
 import android.util.Log
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
@@ -21,6 +23,29 @@ class ChatInteractor(private val presenter: IChatPresenter) {
             .get()
             .addOnSuccessListener { onSuccess(it) }
             .addOnFailureListener { onFailure(it) }
+    }
+
+    fun registerMessagesListener(user1: String, user2: String): ChildEventListener {
+        val listener = object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                presenter.onMessageAdded(snapshot.getValue(Message::class.java) as Message)
+            }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {}
+        }
+
+        messages
+            .orderByChild("key")
+            .equalTo(messageKey(user1, user2))
+            .addChildEventListener(listener)
+
+        return listener
+    }
+
+    fun removeMessagesListener(listener: ChildEventListener) {
+        messages.removeEventListener(listener)
     }
 
     fun getAvatarReference(avatar: String): StorageReference {

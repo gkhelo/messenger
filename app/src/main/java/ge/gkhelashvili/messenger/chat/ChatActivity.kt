@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.firebase.database.ChildEventListener
 import ge.gkhelashvili.messenger.R
 import ge.gkhelashvili.messenger.main.MainActivity
 import ge.gkhelashvili.messenger.model.Message
@@ -22,12 +23,25 @@ class ChatActivity : AppCompatActivity(), IChatView {
     private lateinit var presenter: ChatPresenter
     private lateinit var messagesAdapter: MessagesAdapter
 
+    private lateinit var listener: ChildEventListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
         Log.i(TAG, "Created activity")
         init()
+    }
+
+    override fun onStart() {
+        // TODO: change second parameter to real user id
+        listener = presenter.registerMessagesListener(getCurrentUserId(), "6789")
+        super.onStart()
+    }
+
+    override fun onStop() {
+        presenter.removeMessagesListener(listener)
+        super.onStop()
     }
 
     private fun init() {
@@ -88,6 +102,11 @@ class ChatActivity : AppCompatActivity(), IChatView {
         Log.i(SearchActivity.TAG, "Showing fetched messages")
         messagesAdapter.messages = messages
         messagesAdapter.notifyDataSetChanged()
+    }
+
+    override fun addMessage(message: Message) {
+        Log.i(SearchActivity.TAG, "Showing new message")
+        messagesAdapter.add(message)
     }
 
     // TODO: get real id when authentication will be implemented

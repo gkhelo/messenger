@@ -39,6 +39,11 @@ class MessagesAdapter(private val currentUserId: String) : RecyclerView.Adapter<
         }
     }
 
+    fun add(message: Message) {
+        messages.add(message)
+        notifyItemInserted(messages.size - 1)
+    }
+
     inner class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val time = view.findViewById<TextView>(R.id.message_time)
