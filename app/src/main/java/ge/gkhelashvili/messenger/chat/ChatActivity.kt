@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ge.gkhelashvili.messenger.R
 
-class ChatActivity : AppCompatActivity() {
+class ChatActivity : AppCompatActivity(), IChatView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
