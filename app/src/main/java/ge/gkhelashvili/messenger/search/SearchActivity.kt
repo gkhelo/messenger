@@ -42,7 +42,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
 
     private fun initUsers() {
         findViewById<RecyclerView>(R.id.users_info).adapter = usersAdapter
-        presenter.getAllUsers()
+        presenter.fetchAllUsers()
     }
 
     private fun initBackButton() {
@@ -59,9 +59,9 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         search.addTextChangedListener {
             val name = it.toString()
             if (name.isEmpty()) {
-                presenter.getAllUsers()
+                presenter.fetchAllUsers()
             } else if (name.length > 3) {
-                presenter.getUsers(name)
+                presenter.fetchUsers(name)
             }
         }
     }

@@ -7,12 +7,12 @@ class SearchPresenter(private val view: ISearchView) : ISearchPresenter {
 
     private val interactor = SearchInteractor(this)
 
-    override fun getAllUsers() {
-        interactor.getAllUsers()
+    override fun fetchAllUsers() {
+        interactor.fetchAllUsers()
     }
 
-    override fun getUsers(name: String) {
-        interactor.getUsers(name)
+    override fun fetchUsers(name: String) {
+        interactor.fetchUsers(name)
     }
 
     override fun getAvatarReference(avatar: String): StorageReference {

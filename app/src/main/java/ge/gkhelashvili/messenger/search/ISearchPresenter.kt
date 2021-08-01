@@ -5,9 +5,9 @@ import ge.gkhelashvili.messenger.model.User
 
 interface ISearchPresenter {
 
-    fun getAllUsers()
+    fun fetchAllUsers()
 
-    fun getUsers(name: String)
+    fun fetchUsers(name: String)
 
     fun getAvatarReference(avatar: String): StorageReference
 
