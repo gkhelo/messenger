@@ -12,6 +12,10 @@ class ChatPresenter(private val view: IChatView) : IChatPresenter {
         interactor.fetchMessages(user1, user2)
     }
 
+    override fun sendMessage(message: Message) {
+        interactor.sendMessage(message)
+    }
+
     override fun registerMessagesListener(user1: String, user2: String): ChildEventListener {
         return interactor.registerMessagesListener(user1, user2)
     }

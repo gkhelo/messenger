@@ -8,6 +8,8 @@ interface IChatPresenter {
 
     fun fetchMessages(user1: String, user2: String)
 
+    fun sendMessage(message: Message)
+
     fun registerMessagesListener(user1: String, user2: String): ChildEventListener
 
     fun removeMessagesListener(listener: ChildEventListener)

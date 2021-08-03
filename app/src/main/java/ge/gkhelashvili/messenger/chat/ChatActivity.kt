@@ -10,12 +10,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.ChildEventListener
 import ge.gkhelashvili.messenger.R
 import ge.gkhelashvili.messenger.main.MainActivity
+import ge.gkhelashvili.messenger.messageKey
 import ge.gkhelashvili.messenger.model.Message
 import ge.gkhelashvili.messenger.model.User
 import ge.gkhelashvili.messenger.search.SearchActivity
+import java.util.*
 
 class ChatActivity : AppCompatActivity(), IChatView {
 
@@ -57,6 +61,7 @@ class ChatActivity : AppCompatActivity(), IChatView {
 
         initToolbar()
         initMessages()
+        initInput()
     }
 
     private fun initToolbar() {
@@ -68,6 +73,24 @@ class ChatActivity : AppCompatActivity(), IChatView {
         findViewById<RecyclerView>(R.id.messages).adapter = messagesAdapter
         // TODO: change second parameter to real user id
         presenter.fetchMessages(getCurrentUserId(), "6789")
+    }
+
+    private fun initInput() {
+        val layout = findViewById<TextInputLayout>(R.id.chat_input_layout)
+        val editText = findViewById<TextInputEditText>(R.id.chat_input_edittext)
+        layout.setEndIconOnClickListener {
+            // TODO: change toUser parameter to real user id
+            val message = Message(
+                fromUser = getCurrentUserId(),
+                toUser = "6789",
+                key = messageKey(getCurrentUserId(), "6789"),
+                time = Date(),
+                text = editText.text.toString()
+            )
+
+            editText.setText("")
+            presenter.sendMessage(message)
+        }
     }
 
     private fun initBackButton() {

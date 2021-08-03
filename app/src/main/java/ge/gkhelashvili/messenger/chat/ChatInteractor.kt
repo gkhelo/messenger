@@ -25,6 +25,14 @@ class ChatInteractor(private val presenter: IChatPresenter) {
             .addOnFailureListener { onFailure(it) }
     }
 
+    fun sendMessage(message: Message) {
+        Log.i(TAG, "Sending message")
+        messages.push().key?.let {
+            message.id = it
+            messages.child(it).setValue(message)
+        }
+    }
+
     fun registerMessagesListener(user1: String, user2: String): ChildEventListener {
         val listener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {

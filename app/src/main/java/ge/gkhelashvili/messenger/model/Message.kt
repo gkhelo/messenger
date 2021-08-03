@@ -5,7 +5,7 @@ import java.util.*
 
 @IgnoreExtraProperties
 data class Message(
-    val id: String? = null,
+    var id: String? = null,
     val fromUser: String? = null, // user id
     val toUser: String? = null, // user id
     val key: String? = null, // unique key for the message users
