@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="authEditTextStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:ems">13</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:background">@drawable/edit_text_background</item>
+        <item name="android:paddingVertical">10dp</item>
+    </style>
+
+</resources>
