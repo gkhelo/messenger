@@ -6,6 +6,8 @@ import ge.gkhelashvili.messenger.model.Message
 
 interface IChatPresenter {
 
+    fun getCurrentUserId(): String?
+
     fun fetchMessages(user1: String, user2: String)
 
     fun sendMessage(message: Message)

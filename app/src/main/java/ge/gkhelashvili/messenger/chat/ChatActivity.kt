@@ -24,10 +24,12 @@ import java.util.*
 class ChatActivity : AppCompatActivity(), IChatView {
 
     private lateinit var user: User
-    private lateinit var presenter: ChatPresenter
+    private lateinit var presenter: IChatPresenter
     private lateinit var messagesAdapter: MessagesAdapter
 
     private lateinit var listener: ChildEventListener
+
+    private lateinit var currentUserId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +40,7 @@ class ChatActivity : AppCompatActivity(), IChatView {
     }
 
     override fun onStart() {
-        // TODO: change second parameter to real user id
-        listener = presenter.registerMessagesListener(getCurrentUserId(), "6789")
+        listener = presenter.registerMessagesListener(currentUserId, user.id!!)
         super.onStart()
     }
 
@@ -57,7 +58,15 @@ class ChatActivity : AppCompatActivity(), IChatView {
 
         user = userSerializable
         presenter = ChatPresenter(this)
-        messagesAdapter = MessagesAdapter(getCurrentUserId())
+
+        val id = presenter.getCurrentUserId()
+        if (id == null) {
+            Toast.makeText(this, "Can't load current user", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        currentUserId = id
+        messagesAdapter = MessagesAdapter(currentUserId)
 
         initToolbar()
         initMessages()
@@ -71,19 +80,17 @@ class ChatActivity : AppCompatActivity(), IChatView {
 
     private fun initMessages() {
         findViewById<RecyclerView>(R.id.messages).adapter = messagesAdapter
-        // TODO: change second parameter to real user id
-        presenter.fetchMessages(getCurrentUserId(), "6789")
+        presenter.fetchMessages(currentUserId, user.id!!)
     }
 
     private fun initInput() {
         val layout = findViewById<TextInputLayout>(R.id.chat_input_layout)
         val editText = findViewById<TextInputEditText>(R.id.chat_input_edittext)
         layout.setEndIconOnClickListener {
-            // TODO: change toUser parameter to real user id
             val message = Message(
-                fromUser = getCurrentUserId(),
-                toUser = "6789",
-                key = messageKey(getCurrentUserId(), "6789"),
+                fromUser = currentUserId,
+                toUser = user.id,
+                key = messageKey(currentUserId, user.id!!),
                 time = Date(),
                 text = editText.text.toString()
             )
@@ -130,11 +137,6 @@ class ChatActivity : AppCompatActivity(), IChatView {
     override fun addMessage(message: Message) {
         Log.i(SearchActivity.TAG, "Showing new message")
         messagesAdapter.add(message)
-    }
-
-    // TODO: get real id when authentication will be implemented
-    private fun getCurrentUserId(): String {
-        return "1234"
     }
 
     companion object {

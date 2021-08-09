@@ -37,7 +37,10 @@ class SearchInteractor(private val presenter: ISearchPresenter) {
 
         val users = mutableListOf<User>()
         dataSnapshot.children.forEach {
-            users.add(it.getValue(User::class.java) as User)
+            val user = it.getValue(User::class.java) as User
+            user.id = it.key
+
+            users.add(user)
         }
 
         presenter.onUsersFetched(users)

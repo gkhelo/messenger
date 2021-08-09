@@ -1,6 +1,7 @@
 package ge.gkhelashvili.messenger.chat
 
 import android.util.Log
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -13,8 +14,13 @@ import ge.gkhelashvili.messenger.model.Message
 
 class ChatInteractor(private val presenter: IChatPresenter) {
 
+    private val auth = Firebase.auth
     private val messages = Firebase.database.getReference("messages")
     private val avatars = Firebase.storage.reference.child("avatars")
+
+    fun getCurrentUserId(): String? {
+        return auth.currentUser?.uid
+    }
 
     fun fetchMessages(user1: String, user2: String) {
         messages
@@ -28,7 +34,6 @@ class ChatInteractor(private val presenter: IChatPresenter) {
     fun sendMessage(message: Message) {
         Log.i(TAG, "Sending message")
         messages.push().key?.let {
-            message.id = it
             messages.child(it).setValue(message)
         }
     }
@@ -65,7 +70,10 @@ class ChatInteractor(private val presenter: IChatPresenter) {
 
         val messages = mutableListOf<Message>()
         dataSnapshot.children.forEach {
-            messages.add(it.getValue(Message::class.java) as Message)
+            val message = it.getValue(Message::class.java) as Message
+            message.id = it.key
+
+            messages.add(message)
         }
 
         messages.sort()

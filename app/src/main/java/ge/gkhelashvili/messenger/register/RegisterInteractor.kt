@@ -46,9 +46,8 @@ class RegisterInteractor(private val presenter: IRegisterPresenter) {
 
     private fun addUser(username: String, profession: String) {
         val user = User(username = username, profession = profession)
-        users.push().key?.let {
-            users.child(it).setValue(user)
-        }
+        users.child(auth.currentUser?.uid!!).setValue(user)
+
         presenter.onUserRegistered(user)
     }
 
