@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import ge.gkhelashvili.messenger.chat.ChatActivity
 import ge.gkhelashvili.messenger.login.LoginActivity
 import ge.gkhelashvili.messenger.main.MainActivity
-import ge.gkhelashvili.messenger.profile.ProfileActivity
 import ge.gkhelashvili.messenger.register.RegisterActivity
 import ge.gkhelashvili.messenger.search.SearchActivity
 
@@ -26,7 +25,6 @@ class MessengerActivity : AppCompatActivity() {
         initButton(R.id.register_button, RegisterActivity::class.java)
         initButton(R.id.main_button, MainActivity::class.java)
         initButton(R.id.search_button, SearchActivity::class.java)
-        initButton(R.id.profile_button, ProfileActivity::class.java)
         initButton(R.id.chat_button, ChatActivity::class.java)
     }
 
