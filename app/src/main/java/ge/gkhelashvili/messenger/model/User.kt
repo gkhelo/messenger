@@ -5,9 +5,8 @@ import java.io.Serializable
 
 @IgnoreExtraProperties
 data class User(
-    val id: String? = null,
+    var id: String? = null,
     val username: String? = null,
-    val password: String? = null,
     val profession: String? = null,
     val avatar: String? = null
 ) : Serializable

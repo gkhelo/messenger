@@ -8,6 +8,10 @@ fun Date.formatToMessageTime(): String {
     return sdf.format(this)
 }
 
+fun String.fakeMail(): String {
+    return "$this@mmm.com"
+}
+
 // TODO: maybe change implementation
 fun messageKey(s1: String, s2: String): String {
     if (s1 < s2) {

@@ -1,20 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:textAllCaps="true"
-        android:textSize="30sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/register_avatar"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/user_avatar"
 
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:srcCompat="@drawable/avatar_image_placeholder" />
+
+    <EditText
+        android:id="@+id/register_nickname"
+        style="@style/authEditTextStyle"
+        android:layout_marginTop="32dp"
+        android:hint="@string/enter_your_nickname"
+        android:inputType="text"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_avatar"
+
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/register_password"
+        style="@style/authEditTextStyle"
+        android:layout_marginTop="8dp"
+        android:hint="@string/enter_your_password"
+        android:inputType="textPassword"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_nickname"
+
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/register_profession"
+        style="@style/authEditTextStyle"
+        android:layout_marginTop="8dp"
+        android:hint="@string/what_i_do"
+        android:inputType="text"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_password"
+
+        tools:ignore="Autofill" />
+
+    <Button
+        android:id="@+id/register_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+
+        android:text="@string/sign_up"
+        android:textAllCaps="true"
+        android:textSize="16sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_profession" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
