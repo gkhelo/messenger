@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Update"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/signOutButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -32,10 +33,11 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="96dp"
         android:backgroundTint="@color/white"
         android:text="SIGN OUT"
         android:textColor="#a9a9a9"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -59,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="Profession"
         app:layout_constraintBottom_toTopOf="@+id/updateButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

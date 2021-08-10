@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/mihome"
+    <item android:id="@+id/ic_home"
         android:title="Home"
         android:icon="@drawable/ic_home"/>
     <item android:id="@+id/placeholder"
         android:title=""/>
-    <item android:id="@+id/miProfile"
+    <item android:id="@+id/ic_profile"
         android:title="Profile"
         android:icon="@drawable/ic_settings"/>
 </menu>
