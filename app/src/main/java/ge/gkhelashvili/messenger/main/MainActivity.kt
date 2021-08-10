@@ -1,16 +1,23 @@
 package ge.gkhelashvili.messenger.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ge.gkhelashvili.messenger.R
+import ge.gkhelashvili.messenger.login.LoginActivity
 import ge.gkhelashvili.messenger.main.fragments.ConversationsFragment
 import ge.gkhelashvili.messenger.main.fragments.ProfileFragment
+import ge.gkhelashvili.messenger.model.User
+import ge.gkhelashvili.messenger.register.RegisterActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IMainView {
 
+    private lateinit var presenter: MainPresenter
     private lateinit var viewPager: ViewPager2
     private var fragmentsList = arrayListOf(ConversationsFragment(), ProfileFragment())
 
@@ -18,7 +25,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.i(TAG, "Created activity")
+        presenter = MainPresenter(this)
         initView()
+    }
+
+    override fun onDestroy() {
+        presenter.detachView()
+        super.onDestroy()
     }
 
     private fun initView() {
@@ -42,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                     0 -> bottomNav.selectedItemId = R.id.ic_home
                     1 -> bottomNav.selectedItemId = R.id.ic_profile
                 }
+                presenter.getInfo(position)
             }
         })
 
@@ -49,5 +63,24 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "Main Activity"
+    }
+
+    override fun setProfileInfo(user: User) {
+        (viewPager.adapter as ViewPagerAdapter).setProfileInfo(user)
+    }
+
+    override fun onSignedOut() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
+
+    fun updateButtonClicked(view: View) {
+        val userInfo = (viewPager.adapter as ViewPagerAdapter).getProfileInfo()
+        presenter.updateUserInfo(userInfo)
+    }
+
+    fun signOutButtonClicked(view: View){
+        presenter.signOut()
     }
 }

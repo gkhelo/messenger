@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ge.gkhelashvili.messenger.R
+import ge.gkhelashvili.messenger.main.IMainView
+import ge.gkhelashvili.messenger.main.MainPresenter
 
-class ConversationsFragment : Fragment() {
+class ConversationsFragment() : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
