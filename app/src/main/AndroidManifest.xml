@@ -10,19 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Messenger">
 
-        <activity android:name=".MessengerActivity">
+
+
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".MessengerActivity"/>
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".main.MainActivity" />
         <activity android:name=".search.SearchActivity" />
-        <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".chat.ChatActivity" />
     </application>
 

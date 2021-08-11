@@ -14,6 +14,7 @@ import ge.gkhelashvili.messenger.main.fragments.ConversationsFragment
 import ge.gkhelashvili.messenger.main.fragments.ProfileFragment
 import ge.gkhelashvili.messenger.model.User
 import ge.gkhelashvili.messenger.register.RegisterActivity
+import ge.gkhelashvili.messenger.search.SearchActivity
 
 class MainActivity : AppCompatActivity(), IMainView {
 
@@ -83,4 +84,11 @@ class MainActivity : AppCompatActivity(), IMainView {
     fun signOutButtonClicked(view: View){
         presenter.signOut()
     }
+
+    fun addFabClicked(view: View) {
+        val intent = Intent(this, SearchActivity::class.java)
+        startActivity(intent)
+    }
+
+
 }
