@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="@dimen/appbar_height">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -21,12 +21,12 @@
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/toolbar_height"
             app:layout_collapseMode="pin"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
+            android:paddingBottom="@dimen/toolbar_padding"
+            android:paddingTop="@dimen/toolbar_padding"
+            android:paddingEnd="@dimen/toolbar_padding"
+            android:paddingStart="@dimen/toolbar_padding"
             android:layout_gravity="bottom">
 
             <include
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="10dp">
+            android:paddingBottom="@dimen/scrollview_padding">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvConversations"
                 android:layout_width="match_parent"

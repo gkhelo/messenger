@@ -35,13 +35,7 @@ class ConversationsFragment() : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        try {
-            this.mListener = context as OnCompleteListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException(
-                "$context must implement OnCompleteListener"
-            )
-        }
+        this.mListener = context as OnCompleteListener
     }
 
     fun getConversationScrollView(): NestedScrollView {

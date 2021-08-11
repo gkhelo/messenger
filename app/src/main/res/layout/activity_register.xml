@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/register_avatar"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="@dimen/auth_image_dimen"
+        android:layout_height="@dimen/auth_image_dimen"
+        android:layout_marginTop="@dimen/auth_image_margin_top"
         android:contentDescription="@string/user_avatar"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
     <EditText
         android:id="@+id/register_nickname"
         style="@style/authEditTextStyle"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/high_margin"
         android:hint="@string/enter_your_nickname"
         android:inputType="text"
 
@@ -34,7 +34,7 @@
     <EditText
         android:id="@+id/register_password"
         style="@style/authEditTextStyle"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/low_margin"
         android:hint="@string/enter_your_password"
         android:inputType="textPassword"
 
@@ -47,7 +47,7 @@
     <EditText
         android:id="@+id/register_profession"
         style="@style/authEditTextStyle"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/low_margin"
         android:hint="@string/what_i_do"
         android:inputType="text"
 
@@ -61,11 +61,11 @@
         android:id="@+id/register_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/high_margin"
 
         android:text="@string/sign_up"
         android:textAllCaps="true"
-        android:textSize="16sp"
+        android:textSize="@dimen/high_text_size"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

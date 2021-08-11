@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="profile_image_dimen">200dp</dimen>
+    <dimen name="auth_image_dimen">180dp</dimen>
+    <dimen name="conversation_image_dimen">70dp</dimen>
+    <dimen name="appbar_height">150dp</dimen>
+    <dimen name="toolbar_height">70dp</dimen>
+    <dimen name="profile_page_bottom_padding">128dp</dimen>
+    <dimen name="toolbar_padding">10dp</dimen>
+    <dimen name="scrollview_padding">10dp</dimen>
+    <dimen name="auth_image_margin_top">64dp</dimen>
+    <dimen name="high_margin">32dp</dimen>
+    <dimen name="medium_margin">16dp</dimen>
+    <dimen name="low_margin">8dp</dimen>
+    <dimen name="not_registered_text_size">15sp</dimen>
+    <dimen name="high_text_size">16sp</dimen>
+    <dimen name="sign_up_padding">1dp</dimen>
+
+
+</resources>
