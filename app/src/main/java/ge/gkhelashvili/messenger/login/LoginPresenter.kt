@@ -4,7 +4,11 @@ class LoginPresenter(var view: ILoginView?): ILoginPresenter{
     private val interactor = LoginInteractor(this)
 
     fun validateCredentials(username: String, password: String) {
-        interactor.validateCredentials(username, password)
+        if ((username.isEmpty()) or (password.isEmpty())){
+            view?.showEmptyFieldError()
+        }else {
+            interactor.validateCredentials(username, password)
+        }
     }
 
     override fun onCredentialsValidated(success: Boolean){

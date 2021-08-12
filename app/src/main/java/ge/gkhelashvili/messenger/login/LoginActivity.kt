@@ -43,8 +43,14 @@ class LoginActivity : AppCompatActivity(), ILoginView {
         startActivity(intent)
     }
 
+    override fun showEmptyFieldError() {
+        Toast.makeText(this,"One or more of the fields are empty", Toast.LENGTH_SHORT).show()
+        nickname.setText("")
+        password.setText("")
+    }
+
     override fun showAuthorizationError(){
-        Toast.makeText(this,"INVALID USERNAME OR PASSWORD", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"Authorization unsuccessful", Toast.LENGTH_SHORT).show()
         nickname.setText("")
         password.setText("")
     }
