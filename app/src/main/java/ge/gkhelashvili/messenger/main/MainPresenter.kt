@@ -6,6 +6,10 @@ import ge.gkhelashvili.messenger.model.User
 class MainPresenter(var view: IMainView?): IMainPresenter {
     private val interactor = MainInteractor(this)
 
+    override fun isUserSignedIn(): Boolean {
+        return interactor.isUserSignedIn()
+    }
+
     override fun getInfo(position: Int) {
         //0 ->interactor.fetchConversationsInfo()
         when (position){

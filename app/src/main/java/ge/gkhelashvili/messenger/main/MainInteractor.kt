@@ -13,6 +13,10 @@ class MainInteractor(val presenter: IMainPresenter) {
     private val messages = database.getReference("messages")
     private val users = database.getReference("users")
 
+    fun isUserSignedIn(): Boolean {
+        return auth.currentUser != null
+    }
+
     fun fetchProfileInfo() {
         users.child(auth.currentUser!!.uid).get().addOnSuccessListener {
             presenter.onProfileInfoFetched(

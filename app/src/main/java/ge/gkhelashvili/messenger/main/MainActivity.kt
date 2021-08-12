@@ -28,9 +28,15 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         Log.i(TAG, "Created activity")
         presenter = MainPresenter(this)
+
+        if (!presenter.isUserSignedIn()) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            return
+        }
+
+        setContentView(R.layout.activity_main)
         initView()
     }
 
