@@ -10,4 +10,5 @@ interface IMainPresenter {
     abstract fun updateUserInfo(userInfo: User)
     fun signOut()
     fun onSignedOut()
+    fun onUnsuccessfullProfileInfoFetch()
 }

@@ -39,6 +39,10 @@ class MainPresenter(var view: IMainView?): IMainPresenter {
         view?.onSignedOut()
     }
 
+    override fun onUnsuccessfullProfileInfoFetch() {
+        view?.showInfoFetchError()
+    }
+
 
     fun detachView(){
         view = null
