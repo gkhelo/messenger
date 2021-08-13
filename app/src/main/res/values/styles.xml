@@ -3,7 +3,7 @@
 
     <style name="authEditTextStyle">
         <item name="android:gravity">center</item>
-        <item name="android:ems">13</item>
+        <item name="android:ems">11</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">21sp</item>
