@@ -7,15 +7,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/chat_appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/appbar_height"
 
-        android:paddingVertical="10dp">
+        android:paddingVertical="@dimen/toolbar_padding">
 
         <!-- TODO: collapsing toolbar not working properly -->
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="@dimen/toolbar_padding"
 
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/username"
                     android:textColor="?attr/colorOnPrimary"
-                    android:textSize="30sp"
+                    android:textSize="@dimen/chat_username_text_size"
                     android:textStyle="bold" />
 
                 <TextView
@@ -40,14 +40,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/profession"
                     android:textColor="?attr/colorOnPrimary"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/chat_profession_text_size" />
 
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/chat_user_avatar"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/chat_image_dimen"
+                android:layout_height="@dimen/chat_image_dimen"
                 android:layout_gravity="bottom|end"
                 android:contentDescription="@string/user_avatar"
                 android:src="@drawable/avatar_image_placeholder" />
@@ -68,7 +68,7 @@
         android:id="@+id/messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="@dimen/recyclerview_padding"
 
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -79,16 +79,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginHorizontal="@dimen/chat_input_horizontal_padding"
+        android:layout_marginBottom="@dimen/chat_input_bottom_padding"
         android:hint="@string/message"
 
         app:boxBackgroundColor="@color/gray"
 
-        app:boxCornerRadiusBottomEnd="30dp"
-        app:boxCornerRadiusBottomStart="30dp"
-        app:boxCornerRadiusTopEnd="30dp"
-        app:boxCornerRadiusTopStart="30dp"
+        app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
+        app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
+        app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
+        app:boxCornerRadiusTopStart="@dimen/box_corner_radius"
 
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
@@ -102,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:padding="20dp" />
+            android:padding="@dimen/chat_edit_text_padding" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -3,18 +3,36 @@
     <dimen name="profile_image_dimen">200dp</dimen>
     <dimen name="auth_image_dimen">180dp</dimen>
     <dimen name="conversation_image_dimen">70dp</dimen>
+    <dimen name="chat_image_dimen">50dp</dimen>
+    <dimen name="user_info_image_dimen">100dp</dimen>
     <dimen name="appbar_height">150dp</dimen>
     <dimen name="toolbar_height">70dp</dimen>
     <dimen name="profile_page_bottom_padding">128dp</dimen>
     <dimen name="toolbar_padding">10dp</dimen>
     <dimen name="scrollview_padding">10dp</dimen>
+    <dimen name="recyclerview_padding">10dp</dimen>
     <dimen name="auth_image_margin_top">64dp</dimen>
     <dimen name="high_margin">32dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
     <dimen name="low_margin">8dp</dimen>
     <dimen name="not_registered_text_size">15sp</dimen>
+    <dimen name="chat_profession_text_size">15sp</dimen>
     <dimen name="high_text_size">16sp</dimen>
+    <dimen name="chat_username_text_size">30sp</dimen>
     <dimen name="sign_up_padding">1dp</dimen>
+    <dimen name="chat_input_bottom_padding">3dp</dimen>
+    <dimen name="chat_edit_text_padding">20dp</dimen>
+    <dimen name="chat_input_horizontal_padding">10dp</dimen>
+    <dimen name="box_corner_radius">30dp</dimen>
+    <dimen name="message_max_width">300dp</dimen>
+    <dimen name="message_vertical_margin">10dp</dimen>
+    <dimen name="message_text_size">20sp</dimen>
+    <dimen name="message_padding">20dp</dimen>
+    <dimen name="user_info_vertical_margin">10dp</dimen>
+    <dimen name="user_info_horizontal_padding">20dp</dimen>
+    <dimen name="user_info_margin_start">20dp</dimen>
+    <dimen name="user_info_name_text_size">30sp</dimen>
+    <dimen name="user_info_profession_text_size">20sp</dimen>
 
 
 </resources>

@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:paddingVertical="10dp">
+        android:paddingVertical="@dimen/appbar_height">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
 
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="@dimen/toolbar_padding"
             app:navigationIcon="@drawable/ic_arrow_back">
 
             <include

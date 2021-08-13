@@ -7,10 +7,10 @@
 
     app:boxBackgroundColor="?attr/colorOnPrimary"
 
-    app:boxCornerRadiusBottomEnd="30dp"
-    app:boxCornerRadiusBottomStart="30dp"
-    app:boxCornerRadiusTopEnd="30dp"
-    app:boxCornerRadiusTopStart="30dp"
+    app:boxCornerRadiusBottomEnd="@dimen/box_corner_radius"
+    app:boxCornerRadiusBottomStart="@dimen/box_corner_radius"
+    app:boxCornerRadiusTopEnd="@dimen/box_corner_radius"
+    app:boxCornerRadiusTopStart="@dimen/box_corner_radius"
 
     app:boxStrokeWidth="0dp"
     app:boxStrokeWidthFocused="0dp"

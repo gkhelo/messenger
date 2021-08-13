@@ -2,22 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="10dp"
+    android:layout_marginVertical="@dimen/user_info_vertical_margin"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="@dimen/user_info_horizontal_padding">
 
     <ImageView
         android:id="@+id/user_info_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/user_info_image_dimen"
+        android:layout_height="@dimen/user_info_image_dimen"
         android:contentDescription="@string/user_avatar"
         android:src="@drawable/avatar_image_placeholder" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/user_info_margin_start"
         android:orientation="vertical">
 
         <TextView
@@ -26,14 +26,14 @@
             android:layout_height="wrap_content"
             android:text="@string/username"
             android:textColor="?attr/colorOnSecondary"
-            android:textSize="30sp" />
+            android:textSize="@dimen/user_info_name_text_size" />
 
         <TextView
             android:id="@+id/user_info_profession"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/profession"
-            android:textSize="20sp" />
+            android:textSize="@dimen/user_info_profession_text_size" />
 
     </LinearLayout>
 
