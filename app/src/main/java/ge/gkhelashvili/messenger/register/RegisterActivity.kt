@@ -35,10 +35,15 @@ class RegisterActivity : AppCompatActivity(), IRegisterView {
     }
 
     private fun initSignUp() {
-        val username = findViewById<EditText>(R.id.register_nickname)
+        val usernameEditText = findViewById<EditText>(R.id.register_nickname)
 
         findViewById<Button>(R.id.register_sign_up).setOnClickListener {
-            presenter.validateUsername(username.text.toString())
+            val username = usernameEditText.text.toString()
+            if (username.isEmpty()) {
+                Toast.makeText(this, "Username shouldn't be empty", Toast.LENGTH_SHORT).show()
+            } else {
+                presenter.validateUsername(username)
+            }
         }
     }
 
@@ -52,11 +57,19 @@ class RegisterActivity : AppCompatActivity(), IRegisterView {
             return
         }
 
-        Log.i(TAG, "Username is valid")
+        val password = findViewById<EditText>(R.id.register_password).text.toString()
+        if (password.isEmpty()) {
+            Toast.makeText(this, "Password shouldn't be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        val password = findViewById<EditText>(R.id.register_password)
-        val profession = findViewById<EditText>(R.id.register_profession)
-        presenter.registerUser(username, password.text.toString(), profession.text.toString())
+        val profession = findViewById<EditText>(R.id.register_profession).text.toString()
+        if (profession.isEmpty()) {
+            Toast.makeText(this, "Profession shouldn't be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        presenter.registerUser(username, password, profession)
     }
 
     override fun onUserRegistered(user: User?) {
