@@ -2,10 +2,11 @@ package ge.gkhelashvili.messenger.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
@@ -13,8 +14,13 @@ import com.google.android.material.textfield.TextInputLayout
 import ge.gkhelashvili.messenger.R
 import ge.gkhelashvili.messenger.main.MainActivity
 import ge.gkhelashvili.messenger.model.User
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class SearchActivity : AppCompatActivity(), ISearchView {
+class SearchActivity : AppCompatActivity(), ISearchView, CoroutineScope {
 
     private lateinit var presenter: SearchPresenter
     private lateinit var usersAdapter: UsersAdapter
@@ -31,6 +37,8 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         presenter.detachView()
         super.onDestroy()
     }
+
+    override val coroutineContext: CoroutineContext = Dispatchers.Main
 
     private fun init() {
         presenter = SearchPresenter(this)
@@ -60,15 +68,36 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         val layout = findViewById<TextInputLayout>(R.id.search_layout)
         val search = layout.findViewById<TextInputEditText>(R.id.search_edit_text)
 
-        // TODO: Use debounce
-        search.addTextChangedListener {
-            val name = it.toString()
-            if (name.isEmpty()) {
-                presenter.fetchAllUsers()
-            } else if (name.length > 3) {
-                presenter.fetchUsers(name)
+        val watcher = object : TextWatcher {
+            private var name = ""
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val text = s.toString().trim()
+                if (text == name) {
+                    return
+                }
+
+                name = text
+                launch {
+                    delay(300)  // debounce timeout
+
+                    if (text != name)
+                        return@launch
+
+                    // Search users
+                    if (name.isEmpty()) {
+                        presenter.fetchAllUsers()
+                    } else if (name.length > 3) {
+                        presenter.fetchUsers(name)
+                    }
+                }
             }
+
+            override fun afterTextChanged(s: Editable?) = Unit
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
         }
+
+        search.addTextChangedListener(watcher)
     }
 
     override fun showUsers(users: List<User>?) {
