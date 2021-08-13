@@ -3,7 +3,7 @@ package ge.gkhelashvili.messenger.search
 import com.google.firebase.storage.StorageReference
 import ge.gkhelashvili.messenger.model.User
 
-class SearchPresenter(private val view: ISearchView) : ISearchPresenter {
+class SearchPresenter(private var view: ISearchView?) : ISearchPresenter {
 
     private val interactor = SearchInteractor(this)
 
@@ -20,7 +20,10 @@ class SearchPresenter(private val view: ISearchView) : ISearchPresenter {
     }
 
     override fun onUsersFetched(users: List<User>?) {
-        view.showUsers(users)
+        view?.showUsers(users)
     }
 
+    override fun detachView() {
+        view = null
+    }
 }

@@ -21,4 +21,6 @@ interface IChatPresenter {
     fun onMessagesFetched(messages: MutableList<Message>?)
 
     fun onMessageAdded(message: Message)
+
+    fun detachView()
 }

@@ -4,7 +4,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.storage.StorageReference
 import ge.gkhelashvili.messenger.model.Message
 
-class ChatPresenter(private val view: IChatView) : IChatPresenter {
+class ChatPresenter(private var view: IChatView?) : IChatPresenter {
 
     private val interactor = ChatInteractor(this)
 
@@ -33,10 +33,14 @@ class ChatPresenter(private val view: IChatView) : IChatPresenter {
     }
 
     override fun onMessagesFetched(messages: MutableList<Message>?) {
-        view.showMessages(messages)
+        view?.showMessages(messages)
     }
 
     override fun onMessageAdded(message: Message) {
-        view.addMessage(message)
+        view?.addMessage(message)
+    }
+
+    override fun detachView(){
+        view = null
     }
 }

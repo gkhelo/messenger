@@ -2,7 +2,7 @@ package ge.gkhelashvili.messenger.register
 
 import ge.gkhelashvili.messenger.model.User
 
-class RegisterPresenter(private val view: IRegisterView) : IRegisterPresenter {
+class RegisterPresenter(private var view: IRegisterView?) : IRegisterPresenter {
 
     private val interactor = RegisterInteractor(this)
 
@@ -15,12 +15,14 @@ class RegisterPresenter(private val view: IRegisterView) : IRegisterPresenter {
     }
 
     override fun onUsernameValidated(username: String?, isValid: Boolean) {
-        view.onUsernameValidated(username, isValid)
+        view?.onUsernameValidated(username, isValid)
     }
 
     override fun onUserRegistered(user: User?) {
-        view.onUserRegistered(user)
+        view?.onUserRegistered(user)
     }
 
-
+    override fun detachView() {
+        view = null
+    }
 }

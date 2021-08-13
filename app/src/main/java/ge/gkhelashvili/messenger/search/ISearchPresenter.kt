@@ -12,4 +12,6 @@ interface ISearchPresenter {
     fun getAvatarReference(avatar: String): StorageReference
 
     fun onUsersFetched(users: List<User>?)
+
+    fun detachView()
 }

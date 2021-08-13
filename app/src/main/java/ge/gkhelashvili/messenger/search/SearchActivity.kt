@@ -27,6 +27,11 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         init()
     }
 
+    override fun onDestroy() {
+        presenter.detachView()
+        super.onDestroy()
+    }
+
     private fun init() {
         presenter = SearchPresenter(this)
         usersAdapter = UsersAdapter(presenter)

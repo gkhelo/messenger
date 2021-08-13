@@ -23,6 +23,11 @@ class RegisterActivity : AppCompatActivity(), IRegisterView {
         init()
     }
 
+    override fun onDestroy() {
+        presenter.detachView()
+        super.onDestroy()
+    }
+
     private fun init() {
         presenter = RegisterPresenter(this)
 

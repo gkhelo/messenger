@@ -49,6 +49,11 @@ class ChatActivity : AppCompatActivity(), IChatView {
         super.onStop()
     }
 
+    override fun onDestroy() {
+        presenter.detachView()
+        super.onDestroy()
+    }
+
     private fun init() {
         val userSerializable = intent.getSerializableExtra("user")
         if (userSerializable == null || userSerializable !is User) {
