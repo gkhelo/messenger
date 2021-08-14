@@ -5,7 +5,7 @@ import java.util.*
 
 @IgnoreExtraProperties
 data class Conversation(
-    val toUser: String? = null, // user id
+    val toUser: User? = null,
     val lastMessagetime: String? = null,
     val lastMessage: String? = null,
     val toUserAvatar: String? = null

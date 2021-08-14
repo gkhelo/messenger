@@ -19,6 +19,7 @@ import ge.gkhelashvili.messenger.register.RegisterActivity
 import ge.gkhelashvili.messenger.search.SearchActivity
 import androidx.core.widget.NestedScrollView
 import ge.gkhelashvili.messenger.main.fragments.OnCompleteListener
+import ge.gkhelashvili.messenger.model.Conversation
 
 
 class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener {
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener {
 
         setContentView(R.layout.activity_main)
         initView()
+        presenter.getConversationsInfo()
     }
 
     override fun onDestroy() {
@@ -66,9 +68,12 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener {
             override fun onPageSelected(position: Int) {
                 when (position){
                     0 -> bottomNav.selectedItemId = R.id.ic_home
-                    1 -> bottomNav.selectedItemId = R.id.ic_profile
+                    1 -> {
+                        bottomNav.selectedItemId = R.id.ic_profile
+                        presenter.getProfileInfo()
+                        findViewById<BottomAppBar>(R.id.bottomAppBar).performShow()
+                    }
                 }
-                presenter.getInfo(position)
             }
         })
 
@@ -90,6 +95,10 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener {
 
     override fun showInfoFetchError() {
         Toast.makeText(this,"ERROR", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showConversations(conversations: List<Conversation>) {
+        (viewPager.adapter as ViewPagerAdapter).setConversationsInfo(conversations)
     }
 
     fun updateButtonClicked(view: View) {

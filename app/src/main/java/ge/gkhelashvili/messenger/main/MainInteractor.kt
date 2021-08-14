@@ -5,7 +5,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import ge.gkhelashvili.messenger.login.LoginInteractor
+import ge.gkhelashvili.messenger.messageKey
+import ge.gkhelashvili.messenger.model.Conversation
+import ge.gkhelashvili.messenger.model.Message
 import ge.gkhelashvili.messenger.model.User
 
 class MainInteractor(val presenter: IMainPresenter) {
@@ -14,27 +16,71 @@ class MainInteractor(val presenter: IMainPresenter) {
     private val auth = Firebase.auth
     private val messages = database.getReference("messages")
     private val users = database.getReference("users")
+    private val conversations = mutableListOf<Conversation>()
 
     fun isUserSignedIn(): Boolean {
         return auth.currentUser != null
     }
 
     fun fetchProfileInfo() {
-        users.child(auth.currentUser!!.uid).get().addOnCompleteListener() { task ->
-            if (task.isSuccessful) {
-                presenter.onProfileInfoFetched(
-                    User(profession = task.result?.child("profession")?.getValue<String>(),
-                        username = task.result?.child("username")?.getValue<String>())
+        users.child(auth.currentUser!!.uid).get().addOnSuccessListener {
+            presenter.onProfileInfoFetched(
+                User(profession = it.child("profession").getValue<String>(),
+                    username = it.child("username").getValue<String>()
                 )
-            } else {
-                Log.d(TAG, "INFO FETCH UNSUCCESSFUL")
-                presenter.onUnsuccessfullProfileInfoFetch()
-            }
+            )
+        }.addOnFailureListener {
+            presenter.onUnsuccessfulInfoFetch()
         }
     }
 
     fun fetchConversationsInfo() {
-        TODO("Not yet implemented")
+        users.get().addOnSuccessListener {
+            val usersList = it.children.toList()
+            for (i in usersList.indices) {
+                val user = usersList[i].getValue<User>()
+                user!!.id = usersList[i].key
+                if (i == (usersList.size - 1)) {
+                    fetchConversationWithUser(user, true)
+                } else {
+                    fetchConversationWithUser(user, false)
+                }
+            }
+        }.addOnFailureListener {
+            Log.d("USERS", it.localizedMessage)
+            presenter.onUnsuccessfulInfoFetch()
+        }
+    }
+
+    private fun fetchConversationWithUser(user: User, isLast: Boolean) {
+        val currUserId = auth.currentUser!!.uid
+        messages
+            .orderByChild("key")
+            .equalTo(messageKey(currUserId, user.id!!))
+            .get()
+            .addOnSuccessListener {
+                val messageList = it.children.toList()
+                if(messageList.isNotEmpty()){
+                    var lastMessage = messageList[0].getValue<Message>()
+                    for (messageSnapshot in messageList){
+                        val message = messageSnapshot.getValue<Message>()
+                        if (message != null) {
+                            if (message > lastMessage!!){
+                                lastMessage = message
+                            }
+                        }
+                    }
+                    val conv = Conversation(user, lastMessage?.time.toString(), lastMessage?.text, user.avatar)
+                    conversations.add(conv)
+                    if(isLast){
+                        presenter.onConversationsInfoFetched(conversations.toList())
+                    }
+                }
+            }
+            .addOnFailureListener {
+                Log.d("MESS", it.localizedMessage)
+                presenter.onUnsuccessfulInfoFetch()
+            }
     }
 
     fun updateUserInfo(userInfo: User) {

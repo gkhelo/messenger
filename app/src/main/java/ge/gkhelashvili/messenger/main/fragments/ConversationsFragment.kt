@@ -13,6 +13,7 @@ import ge.gkhelashvili.messenger.R
 import ge.gkhelashvili.messenger.main.ConversationListAdapter
 import ge.gkhelashvili.messenger.main.IMainView
 import ge.gkhelashvili.messenger.main.MainPresenter
+import ge.gkhelashvili.messenger.model.Conversation
 import java.lang.ClassCastException
 
 class ConversationsFragment() : Fragment() {
@@ -40,6 +41,10 @@ class ConversationsFragment() : Fragment() {
 
     fun getConversationScrollView(): NestedScrollView {
         return scrollView
+    }
+
+    fun setInfo(conversations: List<Conversation>) {
+        (rvConversations.adapter as ConversationListAdapter).updateData(conversations)
     }
 
 }

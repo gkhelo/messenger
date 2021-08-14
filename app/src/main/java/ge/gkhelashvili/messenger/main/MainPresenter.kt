@@ -1,6 +1,8 @@
 package ge.gkhelashvili.messenger.main
 
+import android.util.Log
 import ge.gkhelashvili.messenger.R
+import ge.gkhelashvili.messenger.model.Conversation
 import ge.gkhelashvili.messenger.model.User
 
 class MainPresenter(var view: IMainView?): IMainPresenter {
@@ -10,21 +12,16 @@ class MainPresenter(var view: IMainView?): IMainPresenter {
         return interactor.isUserSignedIn()
     }
 
-    override fun getInfo(position: Int) {
-        //0 ->interactor.fetchConversationsInfo()
-        when (position){
-
-            1 -> interactor.fetchProfileInfo()
-        }
-
+    override fun getProfileInfo() {
+        interactor.fetchProfileInfo()
     }
 
     override fun onProfileInfoFetched(user: User) {
         view?.setProfileInfo(user)
     }
 
-    override fun onConversationsInfoFetched() {
-        TODO("Not yet implemented")
+    override fun onConversationsInfoFetched(conversations: List<Conversation>) {
+        view?.showConversations(conversations)
     }
 
     override fun updateUserInfo(userInfo: User) {
@@ -39,10 +36,13 @@ class MainPresenter(var view: IMainView?): IMainPresenter {
         view?.onSignedOut()
     }
 
-    override fun onUnsuccessfullProfileInfoFetch() {
+    override fun onUnsuccessfulInfoFetch() {
         view?.showInfoFetchError()
     }
 
+    override fun getConversationsInfo() {
+        interactor.fetchConversationsInfo()
+    }
 
     fun detachView(){
         view = null

@@ -17,15 +17,13 @@ class LoginInteractor(val presenter: ILoginPresenter) {
         auth.signInWithEmailAndPassword(mail, password)
             .addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
                     presenter.onCredentialsValidated(true)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    presenter.onCredentialsValidated(false)
                 }
+            }.addOnFailureListener {
+                Log.w(TAG, "signInWithEmail:failure", it)
+                presenter.onCredentialsValidated(false)
             }
     }
 

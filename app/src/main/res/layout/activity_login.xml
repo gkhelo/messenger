@@ -60,6 +60,7 @@
         android:textSize="@dimen/high_text_size"
         android:paddingVertical="@dimen/sign_up_padding"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor = "@color/dark_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
