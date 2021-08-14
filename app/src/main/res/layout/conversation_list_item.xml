@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/conversationImage"
-        android:layout_width="@dimen/conversation_image_dimen"
-        android:layout_height="@dimen/conversation_image_dimen"
+        android:layout_width="@dimen/avatar_image_dimen"
+        android:layout_height="@dimen/avatar_image_dimen"
         android:layout_marginStart="@dimen/high_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
