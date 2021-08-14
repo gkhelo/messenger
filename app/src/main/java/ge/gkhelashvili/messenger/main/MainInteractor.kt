@@ -5,6 +5,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import ge.gkhelashvili.messenger.getTimeDifference
 import ge.gkhelashvili.messenger.messageKey
 import ge.gkhelashvili.messenger.model.Conversation
 import ge.gkhelashvili.messenger.model.Message
@@ -70,7 +71,8 @@ class MainInteractor(val presenter: IMainPresenter) {
                             }
                         }
                     }
-                    val conv = Conversation(user, lastMessage?.time.toString(), lastMessage?.text, user.avatar)
+                    val conv = Conversation(user,
+                        lastMessage?.time?.getTimeDifference(), lastMessage?.text, user.avatar)
                     conversations.add(conv)
                     if(isLast){
                         presenter.onConversationsInfoFetched(conversations.toList())

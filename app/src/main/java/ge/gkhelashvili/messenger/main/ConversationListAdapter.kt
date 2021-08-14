@@ -16,18 +16,6 @@ import ge.gkhelashvili.messenger.model.Conversation
 
 class ConversationListAdapter(var list: List<Conversation>): RecyclerView.Adapter<ConversationItemViewHolder>() {
 
-//    var convs = arrayListOf(Conversation("Sayed Effiaz", "5 min", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Sanjida Akter", "15 min", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Sayed Effiaz", "1 hour", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Tour de Bhutan", "5 min", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Sayed Effiaz", "1 hour", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Sayed Effiaz", "1 hour", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Saba", "1 hour", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Giorgi", "5 min", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Dato", "15 min", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Giorgi", "10 min", "On my way home but i needed to stop by the book store to...", null),
-//        Conversation("Dato", "11 min", "On my way home but i needed to stop by the book store to...", null),
-//    )
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.conversation_list_item, parent, false)
         return ConversationItemViewHolder(view)
@@ -57,7 +45,7 @@ class ConversationItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemVi
     fun bindConversation(conversation: Conversation) {
         nameText.text = conversation.toUser!!.username
         lastMessageText.text = conversation.lastMessage
-        //timeText.text = conversation.lastMessagetime
+        timeText.text = conversation.lastMessagetime
         conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
 
         itemView.setOnClickListener {
