@@ -10,7 +10,7 @@ interface IRegisterPresenter {
 
     fun onUsernameValidated(username: String?, isValid: Boolean)
 
-    fun onUserRegistered(user: User?)
+    fun onUserRegistered(user: User?, errorMessage: String?)
 
     fun detachView()
 }

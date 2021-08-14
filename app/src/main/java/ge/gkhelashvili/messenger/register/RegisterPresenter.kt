@@ -18,8 +18,8 @@ class RegisterPresenter(private var view: IRegisterView?) : IRegisterPresenter {
         view?.onUsernameValidated(username, isValid)
     }
 
-    override fun onUserRegistered(user: User?) {
-        view?.onUserRegistered(user)
+    override fun onUserRegistered(user: User?, errorMessage: String?) {
+        view?.onUserRegistered(user, errorMessage)
     }
 
     override fun detachView() {

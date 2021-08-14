@@ -39,7 +39,7 @@ class RegisterInteractor(private val presenter: IRegisterPresenter) {
                     addUser(username, profession)
                 } else {
                     Log.e(TAG, "Error occurred while trying to register user", it.exception)
-                    presenter.onUserRegistered(null)
+                    presenter.onUserRegistered(null, it.exception?.message)
                 }
             }
     }
@@ -48,7 +48,7 @@ class RegisterInteractor(private val presenter: IRegisterPresenter) {
         val user = User(username = username, profession = profession)
         users.child(auth.currentUser?.uid!!).setValue(user)
 
-        presenter.onUserRegistered(user)
+        presenter.onUserRegistered(user, null)
     }
 
     companion object {

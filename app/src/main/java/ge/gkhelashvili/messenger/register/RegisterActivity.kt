@@ -72,9 +72,9 @@ class RegisterActivity : AppCompatActivity(), IRegisterView {
         presenter.registerUser(username, password, profession)
     }
 
-    override fun onUserRegistered(user: User?) {
+    override fun onUserRegistered(user: User?, errorMessage: String?) {
         if (user == null) {
-            Toast.makeText(this, "Can't register user", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Can't register user: $errorMessage", Toast.LENGTH_SHORT).show()
             return
         }
         startActivity(Intent(this, MainActivity::class.java))
