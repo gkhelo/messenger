@@ -46,7 +46,7 @@ class RegisterInteractor(private val presenter: IRegisterPresenter) {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                     val data = baos.toByteArray()
                     val pictureRef = avatars.child("${auth.currentUser!!.uid}.jpg")
-                    var uploadTask = pictureRef.putBytes(data)
+                    pictureRef.putBytes(data)
                 } else {
                     Log.e(TAG, "Error occurred while trying to register user", it.exception)
                     presenter.onUserRegistered(null, it.exception?.message)

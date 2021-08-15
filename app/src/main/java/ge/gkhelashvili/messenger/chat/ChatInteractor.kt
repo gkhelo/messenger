@@ -17,7 +17,6 @@ class ChatInteractor(private val presenter: IChatPresenter) {
 
     private val auth = Firebase.auth
     private val messages = Firebase.database.getReference("messages")
-    private val avatars = Firebase.storage.reference.child("avatars")
 
     fun getCurrentUserId(): String? {
         return auth.currentUser?.uid

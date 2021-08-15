@@ -144,7 +144,6 @@ class MainInteractor(val presenter: IMainPresenter) {
         uploadTask.addOnFailureListener {
             presenter.onUnsuccessfulInfoFetch()
         }.addOnSuccessListener { taskSnapshot ->
-            Log.d("SUCC", "SUCC")
         }
 
     }

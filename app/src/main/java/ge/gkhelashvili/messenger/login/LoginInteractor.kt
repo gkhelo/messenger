@@ -9,7 +9,6 @@ import ge.gkhelashvili.messenger.fakeMail
 class LoginInteractor(val presenter: ILoginPresenter) {
 
     private val auth = Firebase.auth
-    private val users = Firebase.database.getReference("users")
 
 
     fun validateCredentials(username: String, password: String) {
