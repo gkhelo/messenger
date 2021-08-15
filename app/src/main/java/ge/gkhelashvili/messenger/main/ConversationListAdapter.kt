@@ -46,7 +46,13 @@ class ConversationItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemVi
 
     fun bindConversation(conversation: Conversation) {
         nameText.text = conversation.toUser!!.username
-        lastMessageText.text = conversation.lastMessage
+        if (conversation.lastMessage?.length!! > 41){
+            var newStr = conversation.lastMessage.dropLast(conversation.lastMessage.length - 38)
+            newStr = "$newStr..."
+            lastMessageText.text = newStr
+        }else{
+            lastMessageText.text = conversation.lastMessage
+        }
         timeText.text = conversation.lastMessagetime
         conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
 
