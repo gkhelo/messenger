@@ -1,16 +1,20 @@
 package ge.gkhelashvili.messenger.main
 
-import android.app.Activity
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Intent
-import android.net.Uri
+import android.content.pm.PackageManager
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.os.StrictMode
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -29,10 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
-import androidx.core.app.ActivityCompat.startActivityForResult
-
-
-
+import androidx.core.content.ContextCompat
 
 
 class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener, CoroutineScope {
@@ -121,23 +122,44 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener, Corouti
     fun updateButtonClicked(view: View) {
         val userInfo = (viewPager.adapter as ViewPagerAdapter).getProfileInfo()
         presenter.updateUserInfo(userInfo, username)
+        val bitmap = (viewPager.adapter as ViewPagerAdapter).getProfileImageBitmap()
+        presenter.uploadImage(bitmap)
     }
 
     fun photoClicked(view: View){
-        val i = Intent()
-        i.type = "image/*"
-        i.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE)
+        if(checkPermissions()){
+            val i = Intent(Intent.ACTION_PICK)
+            i.type = "image/*"
+            startActivityForResult(i, SELECT_PICTURE)
+        }
+    }
+
+    private fun checkPermissions(): Boolean {
+        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().build())
+
+        val listPermissionsNeeded = arrayListOf<String>()
+        for (permission in listOf(WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE)) {
+            if (this.let { ContextCompat.checkSelfPermission(it, permission) } != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(permission)
+            }
+        }
+
+        if (listPermissionsNeeded.isNotEmpty()) {
+            this.let { ActivityCompat.requestPermissions(it, listPermissionsNeeded.toTypedArray(), 0) }
+            return false
+        }
+
+        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
-                val selectedImageUri: Uri? = data?.data
-                if (null != selectedImageUri) {
-                    findViewById<ImageView>(R.id.profileImage).setImageURI(selectedImageUri)
-                }
+                val selectedImageUri = data?.data!!
+                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImageUri)
+                val bitmapDrawable = BitmapDrawable(bitmap)
+                (viewPager.adapter as ViewPagerAdapter).setProfileImage(bitmapDrawable)
             }
         }
     }

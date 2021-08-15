@@ -1,5 +1,7 @@
 package ge.gkhelashvili.messenger.main
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -38,5 +40,13 @@ class ViewPagerAdapter(activity: FragmentActivity, private val fragmentsList: Ar
 
     fun setConversationsInfo(conversations: List<Conversation>, index: Int) {
         (fragmentsList[0] as ConversationsFragment).setInfo(conversations, index)
+    }
+
+    fun setProfileImage(imagePath: BitmapDrawable) {
+        return (fragmentsList[1] as ProfileFragment).setImage(imagePath)
+    }
+
+    fun getProfileImageBitmap(): Bitmap? {
+        return (fragmentsList[1] as ProfileFragment).getBitmap()
     }
 }

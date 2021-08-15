@@ -1,5 +1,6 @@
 package ge.gkhelashvili.messenger.main
 
+import android.graphics.Bitmap
 import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
@@ -8,10 +9,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import ge.gkhelashvili.messenger.getTimeDifference
 import ge.gkhelashvili.messenger.model.Conversation
 import ge.gkhelashvili.messenger.model.Message
 import ge.gkhelashvili.messenger.model.User
+import java.io.ByteArrayOutputStream
 
 class MainInteractor(val presenter: IMainPresenter) {
 
@@ -19,6 +22,7 @@ class MainInteractor(val presenter: IMainPresenter) {
     private val auth = Firebase.auth
     private val messages = database.getReference("messages")
     private val users = database.getReference("users")
+    private val avatars = Firebase.storage.reference.child("avatars")
     private val conversations = mutableListOf<Conversation>()
 
     fun isUserSignedIn(): Boolean {
@@ -29,7 +33,7 @@ class MainInteractor(val presenter: IMainPresenter) {
         users.child(auth.currentUser!!.uid).get().addOnSuccessListener {
             presenter.onProfileInfoFetched(
                 User(profession = it.child("profession").getValue<String>(),
-                    username = it.child("username").getValue<String>()
+                    username = it.child("username").getValue<String>(),
                 )
             )
         }.addOnFailureListener {
@@ -122,6 +126,21 @@ class MainInteractor(val presenter: IMainPresenter) {
             }
         }
         presenter.onConversationsInfoFetched(newConversations.toList(), -2)
+    }
+
+    fun uploadImage(bitmap: Bitmap?) {
+        val baos = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+        val pictureRef = avatars.child("${auth.currentUser!!.uid}.jpg")
+
+        val uploadTask = pictureRef.putBytes(data)
+        uploadTask.addOnFailureListener {
+            presenter.onUnsuccessfulInfoFetch()
+        }.addOnSuccessListener { taskSnapshot ->
+            Log.d("SUCC", "SUCC")
+        }
+
     }
 
 

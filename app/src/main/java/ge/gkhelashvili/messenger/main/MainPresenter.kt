@@ -1,5 +1,6 @@
 package ge.gkhelashvili.messenger.main
 
+import android.graphics.Bitmap
 import ge.gkhelashvili.messenger.model.Conversation
 import ge.gkhelashvili.messenger.model.User
 
@@ -44,6 +45,10 @@ class MainPresenter(var view: IMainView?): IMainPresenter {
 
     override fun setConversationsInfo(filter: String) {
         interactor.setConversationsInfo(filter)
+    }
+
+    override fun uploadImage(bitmap: Bitmap?) {
+        interactor.uploadImage(bitmap)
     }
 
     fun detachView(){

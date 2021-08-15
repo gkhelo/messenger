@@ -1,5 +1,6 @@
 package ge.gkhelashvili.messenger.main
 
+import android.graphics.Bitmap
 import ge.gkhelashvili.messenger.model.Conversation
 import ge.gkhelashvili.messenger.model.User
 
@@ -14,4 +15,5 @@ interface IMainPresenter {
     fun onUnsuccessfulInfoFetch()
     fun getConversationsInfo()
     fun setConversationsInfo(filter: String)
+    abstract fun uploadImage(bitmap: Bitmap?)
 }

@@ -1,5 +1,7 @@
 package ge.gkhelashvili.messenger.main.fragments
 
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import ge.gkhelashvili.messenger.R
-import ge.gkhelashvili.messenger.main.IMainView
-import ge.gkhelashvili.messenger.main.MainPresenter
 import ge.gkhelashvili.messenger.model.User
+import java.io.File
 
 class ProfileFragment() : Fragment() {
 
@@ -38,4 +40,33 @@ class ProfileFragment() : Fragment() {
     fun getInfo(): User{
         return User(username = name.text.toString(), profession = profession.text.toString())
     }
+
+    fun setImage(imagePath: BitmapDrawable) {
+        Glide.with(this).load(imagePath).circleCrop().into(profileImage)
+//        val imageFile = File(imagePath)
+//        val imageBitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+//        profileImage.background = null
+//        profileImage.setImageBitmap(circleBitmap(imageBitmap))
+    }
+
+    private fun circleBitmap(bitmap: Bitmap): Bitmap {
+        val output = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(output)
+        val paint = Paint()
+        val rect = Rect(0, 0, bitmap.width, bitmap.height)
+        paint.isAntiAlias = true
+        canvas.drawARGB(0, 0, 0, 0)
+        canvas.drawCircle((bitmap.width / 2).toFloat(), (bitmap.height / 2).toFloat(), (bitmap.width / 2).toFloat(), paint)
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawBitmap(bitmap, rect, rect, paint)
+        return output
+    }
+
+    fun getBitmap(): Bitmap? {
+        profileImage.isDrawingCacheEnabled = true
+        profileImage.buildDrawingCache()
+        val bitmap = (profileImage.drawable as BitmapDrawable).bitmap
+        return bitmap
+    }
+
 }
