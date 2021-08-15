@@ -2,15 +2,16 @@ package ge.gkhelashvili.messenger.main
 
 import android.util.Log
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import ge.gkhelashvili.messenger.getTimeDifference
-import ge.gkhelashvili.messenger.messageKey
 import ge.gkhelashvili.messenger.model.Conversation
 import ge.gkhelashvili.messenger.model.Message
 import ge.gkhelashvili.messenger.model.User
-import ge.gkhelashvili.messenger.register.RegisterInteractor
 
 class MainInteractor(val presenter: IMainPresenter) {
 
@@ -36,56 +37,6 @@ class MainInteractor(val presenter: IMainPresenter) {
         }
     }
 
-    fun fetchConversationsInfo() {
-        users.get().addOnSuccessListener {
-            val usersList = it.children.toList()
-            for (i in usersList.indices) {
-                val user = usersList[i].getValue<User>()
-                user!!.id = usersList[i].key
-                if (i == (usersList.size - 1)) {
-                    fetchConversationWithUser(user, true)
-                } else {
-                    fetchConversationWithUser(user, false)
-                }
-            }
-        }.addOnFailureListener {
-            Log.d("USERS", it.localizedMessage)
-            presenter.onUnsuccessfulInfoFetch()
-        }
-    }
-
-    private fun fetchConversationWithUser(user: User, isLast: Boolean) {
-        val currUserId = auth.currentUser!!.uid
-        messages
-            .orderByChild("key")
-            .equalTo(messageKey(currUserId, user.id!!))
-            .get()
-            .addOnSuccessListener {
-                val messageList = it.children.toList()
-                if(messageList.isNotEmpty()){
-                    var lastMessage = messageList[0].getValue<Message>()
-                    for (messageSnapshot in messageList){
-                        val message = messageSnapshot.getValue<Message>()
-                        if (message != null) {
-                            if (message > lastMessage!!){
-                                lastMessage = message
-                            }
-                        }
-                    }
-                    val conv = Conversation(user,
-                        lastMessage?.time?.getTimeDifference(), lastMessage?.text, user.avatar)
-                    conversations.add(conv)
-                    if(isLast){
-                        presenter.onConversationsInfoFetched(conversations.toList())
-                    }
-                }
-            }
-            .addOnFailureListener {
-                Log.d("MESSAGE", it.localizedMessage)
-                presenter.onUnsuccessfulInfoFetch()
-            }
-    }
-
     fun updateUserInfo(userInfo: User) {
         users
             .orderByChild("username")
@@ -107,6 +58,57 @@ class MainInteractor(val presenter: IMainPresenter) {
         auth.signOut()
         presenter.onSignedOut()
     }
+
+    fun setConversationsListeners() {
+        messages.addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val message = snapshot.getValue<Message>()
+                updateConv(message)
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("MESSAGESLISTENER", error.message)
+                presenter.onUnsuccessfulInfoFetch()
+            }
+
+        })
+    }
+
+    private fun updateConv(message: Message?) {
+        if (message != null) {
+            message.toUser?.let { toUser ->
+                users.child(toUser).get().addOnSuccessListener {
+                    val user = it.getValue<User>()
+                    if (user != null) {
+                        user.id = it.key
+                        val conv = Conversation(user,
+                            message.time?.getTimeDifference(), message.text, user.avatar
+                        )
+                        var index = -1
+                        for (i in 0 until conversations.size) {
+                            if (conversations[i].toUser?.id.equals(user.id)){
+                                index = i
+                                conversations.removeAt(i)
+                                break
+                            }
+                        }
+                        conversations.add(0, conv)
+                        presenter.onConversationsInfoFetched(conversations.toList(), index)
+                    }
+                }
+            }
+        }
+    }
+
 
     companion object {
         const val TAG = "Main Interactor"

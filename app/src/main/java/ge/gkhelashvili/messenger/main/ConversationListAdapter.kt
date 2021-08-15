@@ -1,15 +1,12 @@
 package ge.gkhelashvili.messenger.main
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import ge.gkhelashvili.messenger.R
 import ge.gkhelashvili.messenger.chat.ChatActivity
 import ge.gkhelashvili.messenger.model.Conversation
@@ -29,9 +26,14 @@ class ConversationListAdapter(var list: List<Conversation>): RecyclerView.Adapte
         return list.size
     }
 
-    fun updateData(data: List<Conversation>){
+    fun updateData(data: List<Conversation>, index: Int){
         list = data
-        notifyDataSetChanged()
+        if (index == - 1){
+            notifyItemInserted(0)
+        }else{
+            notifyItemRemoved(index)
+            notifyItemInserted(0)
+        }
     }
 }
 

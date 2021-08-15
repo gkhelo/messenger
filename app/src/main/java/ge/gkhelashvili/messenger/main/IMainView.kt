@@ -7,5 +7,5 @@ interface IMainView {
     abstract fun setProfileInfo(user: User)
     fun onSignedOut()
     fun showInfoFetchError()
-    fun showConversations(conversations: List<Conversation>)
+    fun showConversations(conversations: List<Conversation>, index: Int)
 }

@@ -7,7 +7,7 @@ interface IMainPresenter {
     fun isUserSignedIn(): Boolean
     fun getProfileInfo()
     fun onProfileInfoFetched(user: User)
-    fun onConversationsInfoFetched(conversations: List<Conversation>)
+    fun onConversationsInfoFetched(conversations: List<Conversation>, index: Int)
     abstract fun updateUserInfo(userInfo: User)
     fun signOut()
     fun onSignedOut()

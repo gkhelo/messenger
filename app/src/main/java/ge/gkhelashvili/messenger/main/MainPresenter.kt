@@ -1,7 +1,5 @@
 package ge.gkhelashvili.messenger.main
 
-import android.util.Log
-import ge.gkhelashvili.messenger.R
 import ge.gkhelashvili.messenger.model.Conversation
 import ge.gkhelashvili.messenger.model.User
 
@@ -20,8 +18,8 @@ class MainPresenter(var view: IMainView?): IMainPresenter {
         view?.setProfileInfo(user)
     }
 
-    override fun onConversationsInfoFetched(conversations: List<Conversation>) {
-        view?.showConversations(conversations)
+    override fun onConversationsInfoFetched(conversations: List<Conversation>, index: Int) {
+        view?.showConversations(conversations, index)
     }
 
     override fun updateUserInfo(userInfo: User) {
@@ -41,7 +39,7 @@ class MainPresenter(var view: IMainView?): IMainPresenter {
     }
 
     override fun getConversationsInfo() {
-        interactor.fetchConversationsInfo()
+        interactor.setConversationsListeners()
     }
 
     fun detachView(){

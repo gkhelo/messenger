@@ -1,6 +1,5 @@
 package ge.gkhelashvili.messenger.main
 
-import android.util.Log
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -31,7 +30,7 @@ class ViewPagerAdapter(activity: FragmentActivity, private val fragmentsList: Ar
         return (fragmentsList[0] as ConversationsFragment).getConversationScrollView()
     }
 
-    fun setConversationsInfo(conversations: List<Conversation>) {
-        (fragmentsList[0] as ConversationsFragment).setInfo(conversations)
+    fun setConversationsInfo(conversations: List<Conversation>, index: Int) {
+        (fragmentsList[0] as ConversationsFragment).setInfo(conversations, index)
     }
 }

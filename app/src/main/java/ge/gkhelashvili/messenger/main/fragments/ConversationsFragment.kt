@@ -2,7 +2,6 @@ package ge.gkhelashvili.messenger.main.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import ge.gkhelashvili.messenger.R
 import ge.gkhelashvili.messenger.main.ConversationListAdapter
-import ge.gkhelashvili.messenger.main.IMainView
-import ge.gkhelashvili.messenger.main.MainPresenter
 import ge.gkhelashvili.messenger.model.Conversation
-import java.lang.ClassCastException
 
 class ConversationsFragment() : Fragment() {
 
@@ -43,8 +39,8 @@ class ConversationsFragment() : Fragment() {
         return scrollView
     }
 
-    fun setInfo(conversations: List<Conversation>) {
-        (rvConversations.adapter as ConversationListAdapter).updateData(conversations)
+    fun setInfo(conversations: List<Conversation>, index: Int) {
+        (rvConversations.adapter as ConversationListAdapter).updateData(conversations, index)
     }
 
 }

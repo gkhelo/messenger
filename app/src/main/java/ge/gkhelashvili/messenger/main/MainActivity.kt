@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,7 +14,6 @@ import ge.gkhelashvili.messenger.login.LoginActivity
 import ge.gkhelashvili.messenger.main.fragments.ConversationsFragment
 import ge.gkhelashvili.messenger.main.fragments.ProfileFragment
 import ge.gkhelashvili.messenger.model.User
-import ge.gkhelashvili.messenger.register.RegisterActivity
 import ge.gkhelashvili.messenger.search.SearchActivity
 import androidx.core.widget.NestedScrollView
 import ge.gkhelashvili.messenger.main.fragments.OnCompleteListener
@@ -41,6 +39,7 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener {
         setContentView(R.layout.activity_main)
         initView()
         presenter.getConversationsInfo()
+
     }
 
     override fun onDestroy() {
@@ -97,8 +96,8 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener {
         Toast.makeText(this,"ERROR", Toast.LENGTH_SHORT).show()
     }
 
-    override fun showConversations(conversations: List<Conversation>) {
-        (viewPager.adapter as ViewPagerAdapter).setConversationsInfo(conversations)
+    override fun showConversations(conversations: List<Conversation>, index: Int) {
+        (viewPager.adapter as ViewPagerAdapter).setConversationsInfo(conversations, index)
     }
 
     fun updateButtonClicked(view: View) {
