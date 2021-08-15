@@ -1,11 +1,14 @@
 package ge.gkhelashvili.messenger.main
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
@@ -26,12 +29,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+import androidx.core.app.ActivityCompat.startActivityForResult
+
+
+
 
 
 class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener, CoroutineScope {
 
     private lateinit var presenter: MainPresenter
     private lateinit var viewPager: ViewPager2
+    private lateinit var username: String
     private var fragmentsList = arrayListOf(ConversationsFragment(), ProfileFragment())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,9 +96,11 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener, Corouti
 
     companion object {
         const val TAG = "Main Activity"
+        const val SELECT_PICTURE = 200
     }
 
     override fun setProfileInfo(user: User) {
+        username = user.username.toString()
         (viewPager.adapter as ViewPagerAdapter).setProfileInfo(user)
     }
 
@@ -110,7 +120,26 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener, Corouti
 
     fun updateButtonClicked(view: View) {
         val userInfo = (viewPager.adapter as ViewPagerAdapter).getProfileInfo()
-        presenter.updateUserInfo(userInfo)
+        presenter.updateUserInfo(userInfo, username)
+    }
+
+    fun photoClicked(view: View){
+        val i = Intent()
+        i.type = "image/*"
+        i.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+                val selectedImageUri: Uri? = data?.data
+                if (null != selectedImageUri) {
+                    findViewById<ImageView>(R.id.profileImage).setImageURI(selectedImageUri)
+                }
+            }
+        }
     }
 
     fun signOutButtonClicked(view: View){

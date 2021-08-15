@@ -8,7 +8,7 @@ interface IMainPresenter {
     fun getProfileInfo()
     fun onProfileInfoFetched(user: User)
     fun onConversationsInfoFetched(conversations: List<Conversation>, index: Int)
-    abstract fun updateUserInfo(userInfo: User)
+    abstract fun updateUserInfo(userInfo: User, oldUsername: String)
     fun signOut()
     fun onSignedOut()
     fun onUnsuccessfulInfoFetch()

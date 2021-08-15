@@ -12,6 +12,7 @@
         android:layout_width="@dimen/profile_image_dimen"
         android:layout_height="@dimen/profile_image_dimen"
         android:layout_marginBottom="@dimen/high_margin"
+        android:onClick="photoClicked"
         android:src="@drawable/avatar_image_placeholder"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextProfileName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,6 +33,7 @@
     <Button
         android:id="@+id/signOutButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor = "@color/dark_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/profile_page_bottom_padding"

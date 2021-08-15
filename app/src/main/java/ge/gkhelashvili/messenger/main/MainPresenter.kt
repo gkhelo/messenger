@@ -22,8 +22,8 @@ class MainPresenter(var view: IMainView?): IMainPresenter {
         view?.showConversations(conversations, index)
     }
 
-    override fun updateUserInfo(userInfo: User) {
-        interactor.updateUserInfo(userInfo)
+    override fun updateUserInfo(userInfo: User, oldUsername: String) {
+        interactor.updateUserInfo(userInfo, oldUsername)
     }
 
     override fun signOut() {

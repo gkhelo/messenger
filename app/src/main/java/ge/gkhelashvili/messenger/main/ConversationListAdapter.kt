@@ -56,6 +56,7 @@ class ConversationItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemVi
             lastMessageText.text = conversation.lastMessage
         }
         timeText.text = conversation.lastMessagetime
+        //TODO
         conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
 
         itemView.setOnClickListener {

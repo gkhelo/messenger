@@ -37,16 +37,18 @@ class MainInteractor(val presenter: IMainPresenter) {
         }
     }
 
-    fun updateUserInfo(userInfo: User) {
+    fun updateUserInfo(userInfo: User, oldUsername: String) {
         users
             .orderByChild("username")
             .equalTo(userInfo.username)
             .get()
             .addOnSuccessListener {
-                if(it.children.count() == 0){
-                    users.child(auth.currentUser!!.uid).setValue(userInfo)
-                }else{
+                if (it.children.count() > 1){
                     presenter.onUnsuccessfulInfoFetch()
+                }else if(it.children.count() > 0 && oldUsername != userInfo.username){
+                    presenter.onUnsuccessfulInfoFetch()
+                }else{
+                    users.child(auth.currentUser!!.uid).setValue(userInfo)
                 }
             }
             .addOnFailureListener {
