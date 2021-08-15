@@ -42,6 +42,10 @@ class MainPresenter(var view: IMainView?): IMainPresenter {
         interactor.setConversationsListeners()
     }
 
+    override fun setConversationsInfo(filter: String) {
+        interactor.setConversationsInfo(filter)
+    }
+
     fun detachView(){
         view = null
     }

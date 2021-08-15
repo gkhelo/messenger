@@ -4,6 +4,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.textfield.TextInputEditText
 import ge.gkhelashvili.messenger.main.fragments.ConversationsFragment
 import ge.gkhelashvili.messenger.main.fragments.ProfileFragment
 import ge.gkhelashvili.messenger.model.Conversation
@@ -29,6 +30,11 @@ class ViewPagerAdapter(activity: FragmentActivity, private val fragmentsList: Ar
     fun getScrollView(): NestedScrollView {
         return (fragmentsList[0] as ConversationsFragment).getConversationScrollView()
     }
+
+    fun getSearch(): TextInputEditText {
+        return (fragmentsList[0] as ConversationsFragment).getConversationSearch()
+    }
+
 
     fun setConversationsInfo(conversations: List<Conversation>, index: Int) {
         (fragmentsList[0] as ConversationsFragment).setInfo(conversations, index)

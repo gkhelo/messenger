@@ -30,6 +30,8 @@ class ConversationListAdapter(var list: List<Conversation>): RecyclerView.Adapte
         list = data
         if (index == - 1){
             notifyItemInserted(0)
+        }else if (index == - 2) {
+            notifyDataSetChanged()
         }else{
             notifyItemRemoved(index)
             notifyItemInserted(0)

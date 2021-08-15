@@ -2,6 +2,8 @@ package ge.gkhelashvili.messenger.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -16,11 +18,17 @@ import ge.gkhelashvili.messenger.main.fragments.ProfileFragment
 import ge.gkhelashvili.messenger.model.User
 import ge.gkhelashvili.messenger.search.SearchActivity
 import androidx.core.widget.NestedScrollView
+import com.google.android.material.textfield.TextInputEditText
 import ge.gkhelashvili.messenger.main.fragments.OnCompleteListener
 import ge.gkhelashvili.messenger.model.Conversation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
-class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener {
+class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener, CoroutineScope {
 
     private lateinit var presenter: MainPresenter
     private lateinit var viewPager: ViewPager2
@@ -124,7 +132,40 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener {
                 bottomAppBar.performShow()
             }
         })
+
+        val search = (viewPager.adapter as ViewPagerAdapter).getSearch()
+        initSearch(search)
     }
 
+    private fun initSearch(search: TextInputEditText){
+        val watcher = object : TextWatcher {
+            private var name = ""
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val text = s.toString().trim()
+                if (text == name) {
+                    return
+                }
+
+                name = text
+                launch {
+                    delay(300)
+
+                    if (text != name)
+                        return@launch
+
+                    if (name.isEmpty() || name.length > 3){
+                        presenter.setConversationsInfo(name)
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) = Unit
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+        }
+
+        search.addTextChangedListener(watcher)
+    }
+
+    override val coroutineContext: CoroutineContext = Dispatchers.Main
 }

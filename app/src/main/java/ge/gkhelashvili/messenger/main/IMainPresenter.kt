@@ -13,4 +13,5 @@ interface IMainPresenter {
     fun onSignedOut()
     fun onUnsuccessfulInfoFetch()
     fun getConversationsInfo()
+    fun setConversationsInfo(filter: String)
 }

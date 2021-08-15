@@ -112,6 +112,16 @@ class MainInteractor(val presenter: IMainPresenter) {
         }
     }
 
+    fun setConversationsInfo(filter: String) {
+        val newConversations = mutableListOf<Conversation>()
+        for (conversation in conversations){
+            if (conversation.toUser?.username?.startsWith(filter, ignoreCase = true) == true){
+                newConversations.add(conversation)
+            }
+        }
+        presenter.onConversationsInfoFetched(newConversations.toList(), -2)
+    }
+
 
     companion object {
         const val TAG = "Main Interactor"
