@@ -63,7 +63,13 @@ class MainInteractor(val presenter: IMainPresenter) {
         messages.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val message = snapshot.getValue<Message>()
-                updateConv(message)
+                if (message != null) {
+                    if (message.toUser.equals(auth.currentUser!!.uid)){
+                        updateConv(message, message.fromUser)
+                    } else if(message.fromUser.equals(auth.currentUser!!.uid)) {
+                        updateConv(message, message.toUser)
+                    }
+                }
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -83,27 +89,24 @@ class MainInteractor(val presenter: IMainPresenter) {
         })
     }
 
-    private fun updateConv(message: Message?) {
-        if (message != null) {
-            message.toUser?.let { toUser ->
-                users.child(toUser).get().addOnSuccessListener {
-                    val user = it.getValue<User>()
-                    if (user != null) {
-                        user.id = it.key
-                        val conv = Conversation(user,
-                            message.time?.getTimeDifference(), message.text, user.avatar
-                        )
-                        var index = -1
-                        for (i in 0 until conversations.size) {
-                            if (conversations[i].toUser?.id.equals(user.id)){
-                                index = i
-                                conversations.removeAt(i)
-                                break
-                            }
+    private fun updateConv(message: Message, userId: String?) {
+        if (userId != null) {
+            users.child(userId).get().addOnSuccessListener {
+                val user = it.getValue<User>()
+                if (user != null) {
+                    user.id = it.key
+                    val conv = Conversation(user,
+                        message.time?.getTimeDifference(), message.text, user.avatar)
+                    var index = -1
+                    for (i in 0 until conversations.size) {
+                        if (conversations[i].toUser?.id.equals(user.id)){
+                            index = i
+                            conversations.removeAt(i)
+                            break
                         }
-                        conversations.add(0, conv)
-                        presenter.onConversationsInfoFetched(conversations.toList(), index)
                     }
+                    conversations.add(0, conv)
+                    presenter.onConversationsInfoFetched(conversations.toList(), index)
                 }
             }
         }
