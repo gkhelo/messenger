@@ -68,8 +68,9 @@ class ChatInteractor(private val presenter: IChatPresenter) {
         messages.removeEventListener(listener)
     }
 
-    fun getAvatarReference(avatar: String): StorageReference {
-        return avatars.child(avatar)
+    fun getAvatarReference(id: String): StorageReference {
+        return Firebase.storage.getReferenceFromUrl(
+            "gs://messenger-9de03.appspot.com/avatars/${id}.jpg")
     }
 
     private fun onSuccess(dataSnapshot: DataSnapshot) {

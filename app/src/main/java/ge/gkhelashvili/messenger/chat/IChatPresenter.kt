@@ -16,7 +16,7 @@ interface IChatPresenter {
 
     fun removeMessagesListener(listener: ChildEventListener)
 
-    fun getAvatarReference(avatar: String): StorageReference
+    fun getAvatarReference(id: String): StorageReference
 
     fun onMessagesFetched(messages: MutableList<Message>?)
 

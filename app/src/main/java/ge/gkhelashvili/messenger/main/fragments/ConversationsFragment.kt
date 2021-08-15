@@ -12,9 +12,10 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ge.gkhelashvili.messenger.R
 import ge.gkhelashvili.messenger.main.ConversationListAdapter
+import ge.gkhelashvili.messenger.main.IMainPresenter
 import ge.gkhelashvili.messenger.model.Conversation
 
-class ConversationsFragment() : Fragment() {
+class ConversationsFragment(val presenter: IMainPresenter) : Fragment() {
 
     private lateinit var rvConversations: RecyclerView
     private lateinit var scrollView: NestedScrollView
@@ -28,7 +29,7 @@ class ConversationsFragment() : Fragment() {
         val view = inflater.inflate(R.layout.fragment_conversations, container, false)
         scrollView = view.findViewById(R.id.scrollView)
         rvConversations = view.findViewById(R.id.rvConversations)
-        rvConversations.adapter = ConversationListAdapter(emptyList())
+        rvConversations.adapter = ConversationListAdapter(emptyList(), presenter)
         val layout = view.findViewById<TextInputLayout>(R.id.main_search)
         search = layout.findViewById(R.id.search_edit_text)
         mListener?.onComplete()

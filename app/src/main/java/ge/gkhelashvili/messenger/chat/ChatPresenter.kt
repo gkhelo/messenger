@@ -28,8 +28,8 @@ class ChatPresenter(private var view: IChatView?) : IChatPresenter {
         interactor.removeMessagesListener(listener)
     }
 
-    override fun getAvatarReference(avatar: String): StorageReference {
-        return interactor.getAvatarReference(avatar)
+    override fun getAvatarReference(id: String): StorageReference {
+        return interactor.getAvatarReference(id)
     }
 
     override fun onMessagesFetched(messages: MutableList<Message>?) {

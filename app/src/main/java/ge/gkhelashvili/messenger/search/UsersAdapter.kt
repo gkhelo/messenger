@@ -38,15 +38,16 @@ class UsersAdapter(val presenter: ISearchPresenter) : RecyclerView.Adapter<Users
         fun bindUser(user: User) {
             name.text = user.username
             profession.text = user.profession
-
-            if (user.avatar != null) {
+            if (user.id != null) {
                 Glide
-                    .with(view)
-                    .load(presenter.getAvatarReference(user.avatar))
+                    .with(itemView)
+                    .load(presenter.getAvatarReference(user.id!!))
+                    .circleCrop()
                     .into(avatar)
             } else {
                 avatar.setImageResource(R.drawable.avatar_image_placeholder)
             }
+
 
             view.setOnClickListener {
                 val chatIntent = Intent(view.context, ChatActivity::class.java).apply {

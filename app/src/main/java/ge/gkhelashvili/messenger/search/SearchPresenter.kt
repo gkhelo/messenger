@@ -15,8 +15,8 @@ class SearchPresenter(private var view: ISearchView?) : ISearchPresenter {
         interactor.fetchUsers(name)
     }
 
-    override fun getAvatarReference(avatar: String): StorageReference {
-        return interactor.getAvatarReference(avatar)
+    override fun getAvatarReference(id: String): StorageReference {
+        return interactor.getAvatarReference(id)
     }
 
     override fun onUsersFetched(users: List<User>?) {

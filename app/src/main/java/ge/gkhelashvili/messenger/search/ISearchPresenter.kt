@@ -9,7 +9,7 @@ interface ISearchPresenter {
 
     fun fetchUsers(name: String)
 
-    fun getAvatarReference(avatar: String): StorageReference
+    fun getAvatarReference(id: String): StorageReference
 
     fun onUsersFetched(users: List<User>?)
 

@@ -118,10 +118,11 @@ class ChatActivity : AppCompatActivity(), IChatView {
         findViewById<TextView>(R.id.chat_user_profession).text = user.profession
 
         val avatar = findViewById<ImageView>(R.id.chat_user_avatar)
-        if (user.avatar != null) {
+        if (user.id != null) {
             Glide
                 .with(this)
-                .load(presenter.getAvatarReference(user.avatar!!))
+                .load(presenter.getAvatarReference(user.id!!))
+                .circleCrop()
                 .into(avatar)
         } else {
             avatar.setImageResource(R.drawable.avatar_image_placeholder)

@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ge.gkhelashvili.messenger.R
 import ge.gkhelashvili.messenger.chat.ChatActivity
 import ge.gkhelashvili.messenger.model.Conversation
 
-class ConversationListAdapter(var list: List<Conversation>): RecyclerView.Adapter<ConversationItemViewHolder>() {
+class ConversationListAdapter(var list: List<Conversation>, val presenter: IMainPresenter): RecyclerView.Adapter<ConversationItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversationItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.conversation_list_item, parent, false)
@@ -19,7 +20,7 @@ class ConversationListAdapter(var list: List<Conversation>): RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ConversationItemViewHolder, position: Int) {
-        holder.bindConversation(list[position])
+        holder.bindConversation(list[position], presenter)
     }
 
     override fun getItemCount(): Int {
@@ -46,7 +47,7 @@ class ConversationItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemVi
     private val lastMessageText = itemView.findViewById<TextView>(R.id.lastMessageText)
     private val timeText = itemView.findViewById<TextView>(R.id.timeText)
 
-    fun bindConversation(conversation: Conversation) {
+    fun bindConversation(conversation: Conversation, presenter: IMainPresenter) {
         nameText.text = conversation.toUser!!.username
         if (conversation.lastMessage?.length!! > 41){
             var newStr = conversation.lastMessage.dropLast(conversation.lastMessage.length - 38)
@@ -56,8 +57,15 @@ class ConversationItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemVi
             lastMessageText.text = conversation.lastMessage
         }
         timeText.text = conversation.lastMessagetime
-        //TODO
-        conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
+        if (conversation.toUser.id != null) {
+            Glide
+                .with(itemView)
+                .load(presenter.getAvatarReference(conversation.toUser.id!!))
+                .circleCrop()
+                .into(conversationImage)
+        } else {
+            conversationImage.setImageResource(R.drawable.avatar_image_placeholder)
+        }
 
         itemView.setOnClickListener {
             val chatIntent = Intent(itemView.context, ChatActivity::class.java).apply {

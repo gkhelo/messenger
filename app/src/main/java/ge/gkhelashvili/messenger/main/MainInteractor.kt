@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import ge.gkhelashvili.messenger.getTimeDifference
 import ge.gkhelashvili.messenger.model.Conversation
@@ -33,12 +34,17 @@ class MainInteractor(val presenter: IMainPresenter) {
         users.child(auth.currentUser!!.uid).get().addOnSuccessListener {
             presenter.onProfileInfoFetched(
                 User(profession = it.child("profession").getValue<String>(),
-                    username = it.child("username").getValue<String>(),
+                    username = it.child("username").getValue<String>()
                 )
             )
         }.addOnFailureListener {
             presenter.onUnsuccessfulInfoFetch()
         }
+
+        val pictureRef = Firebase.storage.getReferenceFromUrl(
+            "gs://messenger-9de03.appspot.com/avatars/${auth.currentUser!!.uid}.jpg")
+
+        presenter.setProfileImage(pictureRef)
     }
 
     fun updateUserInfo(userInfo: User, oldUsername: String) {
@@ -141,6 +147,11 @@ class MainInteractor(val presenter: IMainPresenter) {
             Log.d("SUCC", "SUCC")
         }
 
+    }
+
+    fun getAvatarReference(id: String): StorageReference {
+        return Firebase.storage.getReferenceFromUrl(
+            "gs://messenger-9de03.appspot.com/avatars/${id}.jpg")
     }
 
 

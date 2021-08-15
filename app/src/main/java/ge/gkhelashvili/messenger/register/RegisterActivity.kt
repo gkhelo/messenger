@@ -1,10 +1,12 @@
 package ge.gkhelashvili.messenger.register
 
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ge.gkhelashvili.messenger.R
@@ -69,7 +71,12 @@ class RegisterActivity : AppCompatActivity(), IRegisterView {
             return
         }
 
-        presenter.registerUser(username, password, profession)
+
+        val registerAvatar = findViewById<ImageView>(R.id.register_avatar)
+        registerAvatar.isDrawingCacheEnabled = true
+        registerAvatar.buildDrawingCache()
+        val bitmap = (registerAvatar.drawable as BitmapDrawable).bitmap
+        presenter.registerUser(username, password, profession, bitmap)
     }
 
     override fun onUserRegistered(user: User?, errorMessage: String?) {

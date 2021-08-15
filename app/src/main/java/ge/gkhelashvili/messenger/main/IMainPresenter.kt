@@ -1,6 +1,7 @@
 package ge.gkhelashvili.messenger.main
 
 import android.graphics.Bitmap
+import com.google.firebase.storage.StorageReference
 import ge.gkhelashvili.messenger.model.Conversation
 import ge.gkhelashvili.messenger.model.User
 
@@ -16,4 +17,6 @@ interface IMainPresenter {
     fun getConversationsInfo()
     fun setConversationsInfo(filter: String)
     abstract fun uploadImage(bitmap: Bitmap?)
+    abstract fun setProfileImage(pictureRef: StorageReference)
+    abstract fun getAvatarReference(id: String): Any
 }

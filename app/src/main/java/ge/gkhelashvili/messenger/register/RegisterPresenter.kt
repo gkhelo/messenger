@@ -1,5 +1,6 @@
 package ge.gkhelashvili.messenger.register
 
+import android.graphics.Bitmap
 import ge.gkhelashvili.messenger.model.User
 
 class RegisterPresenter(private var view: IRegisterView?) : IRegisterPresenter {
@@ -10,8 +11,13 @@ class RegisterPresenter(private var view: IRegisterView?) : IRegisterPresenter {
         interactor.validateUsername(username)
     }
 
-    override fun registerUser(username: String, password: String, profession: String) {
-        interactor.registerUser(username, password, profession)
+    override fun registerUser(
+        username: String,
+        password: String,
+        profession: String,
+        bitmap: Bitmap
+    ) {
+        interactor.registerUser(username, password, profession, bitmap)
     }
 
     override fun onUsernameValidated(username: String?, isValid: Boolean) {

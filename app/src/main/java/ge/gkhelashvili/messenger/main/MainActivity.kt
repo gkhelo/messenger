@@ -34,6 +34,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.StorageReference
 
 
 class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener, CoroutineScope {
@@ -41,13 +44,16 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener, Corouti
     private lateinit var presenter: MainPresenter
     private lateinit var viewPager: ViewPager2
     private lateinit var username: String
-    private var fragmentsList = arrayListOf(ConversationsFragment(), ProfileFragment())
+    private lateinit var fragmentsList : ArrayList<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "Created activity")
         presenter = MainPresenter(this)
-
+        fragmentsList = arrayListOf(ConversationsFragment(presenter), ProfileFragment())
+        Thread(Runnable {
+            Glide.get(this).clearDiskCache()
+        }).start()
         if (!presenter.isUserSignedIn()) {
             startActivity(Intent(this, LoginActivity::class.java))
             return
@@ -117,6 +123,10 @@ class MainActivity : AppCompatActivity(), IMainView, OnCompleteListener, Corouti
 
     override fun showConversations(conversations: List<Conversation>, index: Int) {
         (viewPager.adapter as ViewPagerAdapter).setConversationsInfo(conversations, index)
+    }
+
+    override fun setProfileImage(pictureRef: StorageReference) {
+        (viewPager.adapter as ViewPagerAdapter).loadProfileImage(pictureRef)
     }
 
     fun updateButtonClicked(view: View) {
