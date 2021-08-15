@@ -10,6 +10,7 @@ import ge.gkhelashvili.messenger.messageKey
 import ge.gkhelashvili.messenger.model.Conversation
 import ge.gkhelashvili.messenger.model.Message
 import ge.gkhelashvili.messenger.model.User
+import ge.gkhelashvili.messenger.register.RegisterInteractor
 
 class MainInteractor(val presenter: IMainPresenter) {
 
@@ -80,13 +81,26 @@ class MainInteractor(val presenter: IMainPresenter) {
                 }
             }
             .addOnFailureListener {
-                Log.d("MESS", it.localizedMessage)
+                Log.d("MESSAGE", it.localizedMessage)
                 presenter.onUnsuccessfulInfoFetch()
             }
     }
 
     fun updateUserInfo(userInfo: User) {
-        users.child(auth.currentUser!!.uid).setValue(userInfo)
+        users
+            .orderByChild("username")
+            .equalTo(userInfo.username)
+            .get()
+            .addOnSuccessListener {
+                if(it.children.count() == 0){
+                    users.child(auth.currentUser!!.uid).setValue(userInfo)
+                }else{
+                    presenter.onUnsuccessfulInfoFetch()
+                }
+            }
+            .addOnFailureListener {
+                presenter.onUnsuccessfulInfoFetch()
+            }
     }
 
     fun signOut() {
