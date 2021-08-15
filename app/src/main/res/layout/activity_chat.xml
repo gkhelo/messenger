@@ -9,17 +9,16 @@
         android:id="@+id/chat_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="75dp">
+        android:layout_above="@id/chat_input_layout">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/chat_appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/appbar_height"
 
-            android:paddingVertical="@dimen/toolbar_padding">
+            android:paddingVertical="@dimen/toolbar_padding"
+            app:expanded="false">
 
-            <!-- TODO: collapsing toolbar not working properly -->
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -31,6 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|start"
+                    android:layout_marginStart="@dimen/chat_user_info_margin_start"
                     android:orientation="vertical">
 
                     <TextView

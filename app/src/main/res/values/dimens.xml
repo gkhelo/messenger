@@ -17,6 +17,7 @@
     <dimen name="not_registered_text_size">15sp</dimen>
     <dimen name="chat_profession_text_size">15sp</dimen>
     <dimen name="high_text_size">16sp</dimen>
+    <dimen name="chat_user_info_margin_start">40dp</dimen>
     <dimen name="chat_username_text_size">30sp</dimen>
     <dimen name="sign_up_padding">1dp</dimen>
     <dimen name="chat_input_bottom_padding">3dp</dimen>
