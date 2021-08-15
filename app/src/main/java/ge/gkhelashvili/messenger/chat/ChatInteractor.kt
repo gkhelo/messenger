@@ -11,6 +11,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import ge.gkhelashvili.messenger.messageKey
 import ge.gkhelashvili.messenger.model.Message
+import java.util.*
 
 class ChatInteractor(private val presenter: IChatPresenter) {
 
@@ -39,9 +40,15 @@ class ChatInteractor(private val presenter: IChatPresenter) {
     }
 
     fun registerMessagesListener(user1: String, user2: String): ChildEventListener {
+        val registerTime = Date()
+
         val listener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                presenter.onMessageAdded(snapshot.getValue(Message::class.java) as Message)
+                val message = snapshot.getValue(Message::class.java) as Message
+
+                if (message.time != null && message.time.after(registerTime)) {
+                    presenter.onMessageAdded(snapshot.getValue(Message::class.java) as Message)
+                }
             }
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onChildRemoved(snapshot: DataSnapshot) {}
